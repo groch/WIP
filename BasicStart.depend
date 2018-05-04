@@ -705,12 +705,15 @@
 1524795191 g:\code\bidouille\basicstart\includes\clight.h
 	<AModel.h>
 
-1524794885 source:g:\code\bidouille\wip\amodel.cpp
+1525450977 source:g:\code\bidouille\wip\amodel.cpp
 	"AModel.h"
 	<iostream>
+	<glm/gtc/type_ptr.hpp>
 
-1524795182 g:\code\bidouille\wip\includes\amodel.h
+1525450780 g:\code\bidouille\wip\includes\amodel.h
 	<glad\glad.h>
+	<string>
+	<glm/glm.hpp>
 
 1524113228 g:\code\bidouille\wip\includes\glad\glad.h
 	<windows.h>
@@ -1225,7 +1228,7 @@
 
 1508684289 g:\code\bidouille\wip\includes\glm\simd\integer.h
 
-1524797768 g:\code\bidouille\wip\includes\icamera.h
+1525449898 g:\code\bidouille\wip\includes\icamera.h
 	<glm/glm.hpp>
 	<glad/glad.h>
 
@@ -1279,7 +1282,7 @@
 
 1482026910 g:\code\bidouille\wip\includes\il\ilut_config.h
 
-1524759506 source:g:\code\bidouille\wip\cinputhandler.cpp
+1525449982 source:g:\code\bidouille\wip\cinputhandler.cpp
 	"CInputHandler.h"
 	"CGame.h"
 
@@ -1289,7 +1292,7 @@
 	<iostream>
 	<fstream>
 
-1524797813 source:g:\code\bidouille\wip\cobject.cpp
+1525450916 source:g:\code\bidouille\wip\cobject.cpp
 	"CObject.h"
 	<iostream>
 	<fstream>
@@ -1379,7 +1382,7 @@
 1508684289 g:\code\bidouille\wip\includes\glm\gtc\type_ptr.inl
 	<cstring>
 
-1524837543 source:g:\code\bidouille\wip\cperspectivecamera.cpp
+1525449931 source:g:\code\bidouille\wip\cperspectivecamera.cpp
 	"CPerspectiveCamera.h"
 	<glm/gtc/matrix_transform.hpp>
 	<GLFW\glfw3.h>

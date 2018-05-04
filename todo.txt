@@ -42,8 +42,19 @@ CObjectManager
 CModel / IModel
     public:
 		build()
-		pre_draw()
+		UseShaderProgram()
         draw()
+		
+		SetBool
+		SetInt
+		SetFloat
+		SetVec2
+		SetVec3
+		SetVec4
+		SetMat2
+		SetMat3
+		SetMat4
+		
 
 
     private:

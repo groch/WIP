@@ -35,10 +35,10 @@ int CInputHandler::processInput(float deltaTime)
         cam.ProcessKeyboard(ICamera::LEFT, deltaTime);
     if(glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
         cam.ProcessKeyboard(ICamera::RIGHT, deltaTime);
-//    if(glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
-//        camPos.y -= 0.01f;
-//    if(glfwGetKey(window, GLFW_KEY_CAPS_LOCK) == GLFW_PRESS)
-//        camPos.y += 0.01f;
+    if(glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
+        cam.ProcessKeyboard(ICamera::UP, deltaTime);
+    if(glfwGetKey(window, GLFW_KEY_CAPS_LOCK) == GLFW_PRESS)
+        cam.ProcessKeyboard(ICamera::DOWN, deltaTime);
     return 0;
 }
 

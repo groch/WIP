@@ -146,6 +146,10 @@ void CPerspectiveCamera::ProcessKeyboard(ICamera::Camera_Movement direction, flo
         _position -= _right * velocity;
     if (direction == CPerspectiveCamera::RIGHT)
         _position += _right * velocity;
+    if (direction == CPerspectiveCamera::UP)
+        _position += _up * velocity;
+    if (direction == CPerspectiveCamera::DOWN)
+        _position -= _up * velocity;
     //_position.y = 0.0f;
 }
 

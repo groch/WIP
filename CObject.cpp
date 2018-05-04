@@ -27,7 +27,7 @@ CObject::~CObject()
 }
 
 int CObject::Draw() {
-    _model.Pre_Draw();
+    _model.UseShaderProgram();
     glm::mat4 model = glm::mat4(1.0f);
     model = glm::translate(model, _pos);
     if (_turning)
@@ -46,18 +46,18 @@ int CObject::Draw() {
     //projection = glm::perspective(glm::radians(45.0f), screenWidth / screenHeight, 0.1f, 100.0f);
     //projection = glm::ortho(0.0f, 1600.0f, 0.0f, 900.0f, 0.1f, 300.0f);
 
-    glUniformMatrix4fv(glGetUniformLocation(_model.GetShaderId(), "model"), 1, GL_FALSE, glm::value_ptr(model));
-    glUniformMatrix4fv(glGetUniformLocation(_model.GetShaderId(), "view"), 1, GL_FALSE, glm::value_ptr(view));
-    glUniformMatrix4fv(glGetUniformLocation(_model.GetShaderId(), "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+    _model.SetMat4("model", model);
+    _model.SetMat4("view", view);
+    _model.SetMat4("projection", projection);
 
     if (!_isLight) {
         glm::vec3 oColor(1.0f, 0.5f, 0.31f);
         glm::vec3 lColor(1.0f, 1.0f, 1.0f);
         glm::vec3 lPos = _game.GetLightList()[0]->GetPos();
-        glUniform3fv(glGetUniformLocation(_model.GetShaderId(), "objectColor"), 1, &oColor[0]);
-        glUniform3fv(glGetUniformLocation(_model.GetShaderId(), "lightColor"), 1, &lColor[0]);
-        glUniform3fv(glGetUniformLocation(_model.GetShaderId(), "lightPos"), 1, &lPos[0]);
-        glUniform3fv(glGetUniformLocation(_model.GetShaderId(), "viewPos"), 1, &_game.GetCamera().GetPos()[0]);
+        _model.SetVec3("objectColor", oColor);
+        _model.SetVec3("lightColor", lColor);
+        _model.SetVec3("lightPos", lPos);
+        _model.SetVec3("viewPos", _game.GetCamera().GetPos());
     }
 
     //std::cout << vec.x << vec.y << vec.z << std::endl;

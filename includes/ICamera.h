@@ -11,7 +11,9 @@ class ICamera
             FORWARD,
             BACKWARD,
             LEFT,
-            RIGHT
+            RIGHT,
+            UP,
+            DOWN
         };
         virtual ~ICamera() = default;
 
