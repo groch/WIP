@@ -7,7 +7,7 @@
 #include <iostream>
 #include "IL\ilut.h"
 
-CGame::CGame() : _input(*this), _camera(new CPerspectiveCamera()), _alpha(0.5f)
+CGame::CGame() : _input(*this), _camera(new CPerspectiveCamera()), _alpha(0.0f)
 {
     //ctor
     int ret = setup();
@@ -97,20 +97,10 @@ void CGame::loop() {
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
 
-        int ret = _input.processInput(deltaTime);
-        if (ret < 0 && _alpha > 0.0f) {
-            _alpha -= 0.001f;
-            if (_alpha <= 0.0f)
-                _alpha = 0.0f;
-        }
-        if (ret > 0 && _alpha < 1.0f){
-            _alpha += 0.001f;
-            if (_alpha >= 1.0f)
-                _alpha = 1.0f;
-        }
-//        if (ret)
-//            std::cout << "alpha=" << alpha << std::endl;
-        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+        _input.processInput(deltaTime);
+
+        //glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+        glClearColor(0.01f, 0.01f, 0.01f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         for (auto obj : _lightList)
@@ -133,4 +123,13 @@ void CGame::loop() {
 void CGame::framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
     glViewport(0, 0, width, height);
+}
+
+void CGame::AddAlpha(float val)
+{
+    _alpha += val;
+    if (_alpha >= 1.0f)
+        _alpha = 1.0f;
+    if (_alpha <= 0.0f)
+        _alpha = 0.0f;
 }

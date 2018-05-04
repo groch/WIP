@@ -17,16 +17,16 @@ CInputHandler::~CInputHandler()
     //dtor
 }
 
-int CInputHandler::processInput(float deltaTime)
+void CInputHandler::processInput(float deltaTime)
 {
     ICamera& cam = _game->GetCamera();
     GLFWwindow* window = _game->GetWindow();
     if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
     if(glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
-        return 1;
+        _game->AddAlpha(0.0005f);
     if(glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
-        return -1;
+        _game->AddAlpha(-0.0005f);
     if(glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
         cam.ProcessKeyboard(ICamera::FORWARD, deltaTime);
     if(glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
@@ -39,7 +39,7 @@ int CInputHandler::processInput(float deltaTime)
         cam.ProcessKeyboard(ICamera::UP, deltaTime);
     if(glfwGetKey(window, GLFW_KEY_CAPS_LOCK) == GLFW_PRESS)
         cam.ProcessKeyboard(ICamera::DOWN, deltaTime);
-    return 0;
+    //return 0;
 }
 
 void CInputHandler::mouse_callback(GLFWwindow* window, double xpos, double ypos)

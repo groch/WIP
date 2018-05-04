@@ -35,34 +35,45 @@ int CObject::Draw() {
     if (_isLight)
         model = glm::scale(model, glm::vec3(0.5f));
 
-    //model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-
-    //glm::mat4 view = glm::mat4(1.0f);
-    // note that we're translating the scene in the reverse direction of where we want to move
     glm::mat4 view = _game.GetCamera().GetViewMatrix();
-
     glm::mat4 projection = _game.GetCamera().GetProjMatrix();
-    //projection = glm::perspective(glm::radians(cam.GetFoV()), 16.0f / 9.0f, 0.1f, 100.0f);
-    //projection = glm::perspective(glm::radians(45.0f), screenWidth / screenHeight, 0.1f, 100.0f);
-    //projection = glm::ortho(0.0f, 1600.0f, 0.0f, 900.0f, 0.1f, 300.0f);
 
     _model.SetMat4("model", model);
     _model.SetMat4("view", view);
     _model.SetMat4("projection", projection);
 
     if (!_isLight) {
-        glm::vec3 oColor(1.0f, 0.5f, 0.31f);
-        glm::vec3 lColor(1.0f, 1.0f, 1.0f);
-        glm::vec3 lPos = _game.GetLightList()[0]->GetPos();
-        _model.SetVec3("material.ambient",  1.0f, 0.5f, 0.31f);
-        _model.SetVec3("material.diffuse",  1.0f, 0.5f, 0.31f);
-        _model.SetVec3("material.specular", 0.5f, 0.5f, 0.5f);
-        _model.SetFloat("material.shininess", 32.0f);
-        _model.SetVec3("light.ambient",  0.2f, 0.2f, 0.2f);
+        // random light to test
+        glm::vec3 lightColor;
+        lightColor.x = sin(glfwGetTime() * 2.0f);
+        lightColor.y = sin(glfwGetTime() * 0.7f);
+        lightColor.z = sin(glfwGetTime() * 1.3f);
+
+        glm::vec3 diffuseColor = lightColor   * glm::vec3(0.5f); // decrease the influence
+        glm::vec3 ambientColor = diffuseColor * glm::vec3(0.2f); // low influence
+
+//        _model.SetVec3("material.ambient",  1.0f, 0.5f, 0.31f);
+//        _model.SetVec3("material.diffuse",  1.0f, 0.5f, 0.31f);
+//        _model.SetVec3("material.specular", 0.5f, 0.5f, 0.5f);
+//        _model.SetFloat("material.shininess", 32.0f);
+
+        _model.SetVec3("material.ambient",  0.0215f, 0.1745f, 0.0215f);
+        _model.SetVec3("material.diffuse",  0.07568f, 0.61424f, 0.07568f);
+        _model.SetVec3("material.specular", 0.633f, 0.727811f, 0.633f);
+        _model.SetFloat("material.shininess", 0.6f * 128.0f);
+
+        _model.SetVec3("light.ambient",  0.01f, 0.01f, 0.01f);
+        //_model.SetVec3("light.ambient",  1.0f, 1.0f, 1.0f);
+        //_model.SetVec3("light.ambient",  ambientColor);
+
         _model.SetVec3("light.diffuse",  0.5f, 0.5f, 0.5f); // darken the light a bit to fit the scene
+        //_model.SetVec3("light.diffuse",  1.0f, 1.0f, 1.0f);
+        //_model.SetVec3("light.diffuse",  diffuseColor);
+
         _model.SetVec3("light.specular", 1.0f, 1.0f, 1.0f);
-        _model.SetVec3("light.position", lPos);
+        _model.SetVec3("light.position", _game.GetLightList()[0]->GetPos());
         _model.SetVec3("viewPos", _game.GetCamera().GetPos());
+        _model.SetFloat("time", glfwGetTime());
     }
 
     //std::cout << vec.x << vec.y << vec.z << std::endl;

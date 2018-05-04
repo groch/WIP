@@ -20,6 +20,7 @@ class CGame
         std::vector<IObject*>   GetObjList() { return _objList; }
         std::vector<IObject*>   GetLightList() { return _lightList; }
         float                   GetAlpha() { return _alpha; }
+        void                    AddAlpha(float);
 
         void                    loop();
 

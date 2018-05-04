@@ -24,7 +24,7 @@ class CCube : public AModel
         unsigned int            _vao;
         unsigned int            _vbo;
         unsigned int            _ebo;
-        unsigned int            _texId[2];
+        unsigned int            _texId[3];
 };
 
 #endif // CCUBE_H

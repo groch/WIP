@@ -12,7 +12,7 @@ class CInputHandler
         CInputHandler(CGame& game);
         ~CInputHandler();
 
-        int             processInput(float);
+        void            processInput(float);
         static void     mouse_callback(GLFWwindow* window, double xpos, double ypos);
         static void     scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 

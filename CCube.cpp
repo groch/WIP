@@ -104,10 +104,12 @@ CCube::CCube()
     glVertexAttribPointer(3, 2, GL_FLOAT, GL_FALSE, 11 * sizeof(float), (void*)(9 * sizeof(float)));
     glEnableVertexAttribArray(3);
 
-    _texId[0] = loadImage("ressources\\textures\\wall.jpg");
-    glUniform1i(glGetUniformLocation(_shaderProgram, "texture1"), 0);
-    _texId[1] = loadImage("ressources\\textures\\awesomeface.png");
-    glUniform1i(glGetUniformLocation(_shaderProgram, "texture2"), 1);
+    _texId[0] = loadImage("ressources\\textures\\container2.png");
+    glUniform1i(glGetUniformLocation(_shaderProgram, "material.diffuse"), 0);
+    _texId[1] = loadImage("ressources\\textures\\matrix.jpg");
+    glUniform1i(glGetUniformLocation(_shaderProgram, "material.emission"), 1);
+    _texId[2] = loadImage("ressources\\textures\\container2_specular.png");
+    glUniform1i(glGetUniformLocation(_shaderProgram, "material.specular"), 2);
 
 //    std::cout << "texId[0]=" << _texId[0] << std::endl;
 //    std::cout << "texId[1]=" << _texId[1] << std::endl;
@@ -126,6 +128,8 @@ void    CCube::Draw() {
     glBindTexture(GL_TEXTURE_2D, _texId[0]);
     glActiveTexture(GL_TEXTURE1);
     glBindTexture(GL_TEXTURE_2D, _texId[1]);
+    glActiveTexture(GL_TEXTURE2);
+    glBindTexture(GL_TEXTURE_2D, _texId[2]);
 
     glBindVertexArray(_vao);
 
