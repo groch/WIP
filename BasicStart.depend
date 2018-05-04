@@ -705,12 +705,12 @@
 1524795191 g:\code\bidouille\basicstart\includes\clight.h
 	<AModel.h>
 
-1525450977 source:g:\code\bidouille\wip\amodel.cpp
+1525452881 source:g:\code\bidouille\wip\amodel.cpp
 	"AModel.h"
 	<iostream>
 	<glm/gtc/type_ptr.hpp>
 
-1525450780 g:\code\bidouille\wip\includes\amodel.h
+1525452740 g:\code\bidouille\wip\includes\amodel.h
 	<glad\glad.h>
 	<string>
 	<glm/glm.hpp>
@@ -1292,7 +1292,7 @@
 	<iostream>
 	<fstream>
 
-1525450916 source:g:\code\bidouille\wip\cobject.cpp
+1525453335 source:g:\code\bidouille\wip\cobject.cpp
 	"CObject.h"
 	<iostream>
 	<fstream>

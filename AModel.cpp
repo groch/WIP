@@ -67,12 +67,24 @@ void AModel::SetVec2(const std::string &name, const glm::vec2& value) const {
     glUniform2fv(glGetUniformLocation(_shaderProgram, name.c_str()), 1, &value[0]);
 }
 
+void AModel::SetVec2(const std::string &name, float x, float y) const{
+    glUniform2f(glGetUniformLocation(_shaderProgram, name.c_str()), x, y);
+}
+
 void AModel::SetVec3(const std::string &name, const glm::vec3& value) const {
     glUniform3fv(glGetUniformLocation(_shaderProgram, name.c_str()), 1, &value[0]);
 }
 
+void AModel::SetVec3(const std::string &name, float x, float y, float z) const{
+    glUniform3f(glGetUniformLocation(_shaderProgram, name.c_str()), x, y, z);
+}
+
 void AModel::SetVec4(const std::string &name, const glm::vec4& value) const {
     glUniform4fv(glGetUniformLocation(_shaderProgram, name.c_str()), 1, &value[0]);
+}
+
+void AModel::SetVec4(const std::string &name, float x, float y, float z, float w) const{
+    glUniform4f(glGetUniformLocation(_shaderProgram, name.c_str()), x, y, z, w);
 }
 
 void AModel::SetMat2(const std::string &name, const glm::mat2& mat) const {

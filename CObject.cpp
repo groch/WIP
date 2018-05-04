@@ -54,9 +54,14 @@ int CObject::Draw() {
         glm::vec3 oColor(1.0f, 0.5f, 0.31f);
         glm::vec3 lColor(1.0f, 1.0f, 1.0f);
         glm::vec3 lPos = _game.GetLightList()[0]->GetPos();
-        _model.SetVec3("objectColor", oColor);
-        _model.SetVec3("lightColor", lColor);
-        _model.SetVec3("lightPos", lPos);
+        _model.SetVec3("material.ambient",  1.0f, 0.5f, 0.31f);
+        _model.SetVec3("material.diffuse",  1.0f, 0.5f, 0.31f);
+        _model.SetVec3("material.specular", 0.5f, 0.5f, 0.5f);
+        _model.SetFloat("material.shininess", 32.0f);
+        _model.SetVec3("light.ambient",  0.2f, 0.2f, 0.2f);
+        _model.SetVec3("light.diffuse",  0.5f, 0.5f, 0.5f); // darken the light a bit to fit the scene
+        _model.SetVec3("light.specular", 1.0f, 1.0f, 1.0f);
+        _model.SetVec3("light.position", lPos);
         _model.SetVec3("viewPos", _game.GetCamera().GetPos());
     }
 
