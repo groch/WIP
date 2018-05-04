@@ -1,0 +1,62 @@
+main()
+
+    build shaders / objects ?
+        load shaders from file
+        link shaders to program
+
+
+    loop
+        check inputs
+        apply_actions
+        physics ?
+        render/draw
+        after_actions ?
+            glfwSwapBuffers(window);
+            glfwPollEvents();
+
+
+
+-----------------------
+
+CGame
+pub:
+	setup()
+	loop();
+pri:
+	ICamera&
+	vector<IModel*>		_models			GET
+	vector<IObject*>	_objList		GET
+	vector<IObject*>	_lightList		GET
+	GLFWwindow*
+	CInputHandler
+	
+CObjectManager
+    build/load from file
+        load associated shader & link to program
+
+
+
+
+
+
+CModel / IModel
+    public:
+		build()
+		pre_draw()
+        draw()
+
+
+    private:
+        unsigned int shaderProgram;
+        unsigned int VAO;
+        unsigned int VBO; (for deallocation purpose)
+		CGame&
+
+CObject / IObject
+	pub:
+		int			draw;
+	pri:
+		IObject&	_model
+		vec3		_pos
+		vec3		_rot
+		vec3		_scale

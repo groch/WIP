@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="BasicStart" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/BasicStart" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-Wall" />
+					<Add option="-std=c++11" />
+					<Add option="-g" />
+					<Add directory="includes" />
+					<Add directory="include" />
+				</Compiler>
+				<Linker>
+					<Add library="libglfw3.a" />
+					<Add library="opengl32" />
+					<Add library="gdi32" />
+					<Add library="DevIL" />
+					<Add library="ILU" />
+					<Add library="ILUT" />
+					<Add directory="lib" />
+				</Linker>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/BasicStart" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add directory="include" />
+					<Add directory="includes" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+		</Compiler>
+		<Unit filename="AModel.cpp" />
+		<Unit filename="CCube.cpp" />
+		<Unit filename="CGame.cpp" />
+		<Unit filename="CInputHandler.cpp" />
+		<Unit filename="CLight.cpp" />
+		<Unit filename="CObject.cpp" />
+		<Unit filename="CPerspectiveCamera.cpp" />
+		<Unit filename="glad.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="includes/AModel.h" />
+		<Unit filename="includes/CCube.h" />
+		<Unit filename="includes/CGame.h" />
+		<Unit filename="includes/CInputHandler.h" />
+		<Unit filename="includes/CLight.h" />
+		<Unit filename="includes/CObject.h" />
+		<Unit filename="includes/CPerspectiveCamera.h" />
+		<Unit filename="includes/GLFW/glfw3.h" />
+		<Unit filename="includes/ICamera.h" />
+		<Unit filename="includes/IObject.h" />
+		<Unit filename="includes/glad/glad.h" />
+		<Unit filename="includes/render.h" />
+		<Unit filename="main.cpp" />
+		<Unit filename="render.cpp" />
+		<Unit filename="shaders/fragmentShader1.shader" />
+		<Unit filename="shaders/fragmentShaderLight1.shader" />
+		<Unit filename="shaders/vertexShader1.shader" />
+		<Unit filename="shaders/vertexShaderLight1.shader" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

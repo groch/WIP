@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_layout_file>
+	<FileVersion major="1" minor="0" />
+	<ActiveTarget name="Debug" />
+	<File name="includes\CPerspectiveCamera.h" open="0" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1116" topLine="1" />
+		</Cursor>
+	</File>
+	<File name="includes\CCube.h" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="79" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="main.cpp" open="0" top="0" tabpos="1" split="2" active="2" splitpos="865" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="20" topLine="0" />
+			<Cursor2 position="0" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="shaders\fragmentShader1.shader" open="1" top="1" tabpos="10" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="781" topLine="5" />
+		</Cursor>
+	</File>
+	<File name="AModel.cpp" open="1" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1479" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="includes\CLight.h" open="1" top="0" tabpos="11" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="82" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="includes\render.h" open="0" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="120" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="render.cpp" open="1" top="0" tabpos="15" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="2969" topLine="43" />
+		</Cursor>
+	</File>
+	<File name="includes\glad\glad.h" open="0" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="13311" topLine="421" />
+		</Cursor>
+	</File>
+	<File name="includes\CObject.h" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="142" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="CInputHandler.cpp" open="0" top="0" tabpos="10" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1475" topLine="34" />
+		</Cursor>
+	</File>
+	<File name="includes\CInputHandler.h" open="0" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="631" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="shaders\vertexShader1.shader" open="1" top="0" tabpos="13" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="175" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="includes\CGame.h" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="865" topLine="6" />
+		</Cursor>
+	</File>
+	<File name="CLight.cpp" open="1" top="0" tabpos="12" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="3874" topLine="91" />
+		</Cursor>
+	</File>
+	<File name="CCube.cpp" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="5682" topLine="100" />
+		</Cursor>
+	</File>
+	<File name="CGame.cpp" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="3753" topLine="96" />
+		</Cursor>
+	</File>
+	<File name="includes\ICamera.h" open="0" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="409" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="includes\IObject.h" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="254" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="glad.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="26122" topLine="617" />
+		</Cursor>
+	</File>
+	<File name="CObject.cpp" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="2380" topLine="33" />
+		</Cursor>
+	</File>
+	<File name="includes\AModel.h" open="1" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="486" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="includes\GLFW\glfw3.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="151877" topLine="4211" />
+		</Cursor>
+	</File>
+	<File name="CPerspectiveCamera.cpp" open="1" top="0" tabpos="14" split="2" active="1" splitpos="865" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="582" topLine="24" />
+			<Cursor2 position="2905" topLine="28" />
+		</Cursor>
+	</File>
+</CodeBlocks_layout_file>
