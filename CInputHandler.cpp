@@ -37,7 +37,7 @@ void CInputHandler::processInput(float deltaTime)
         cam.ProcessKeyboard(ICamera::RIGHT, deltaTime);
     if(glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
         cam.ProcessKeyboard(ICamera::UP, deltaTime);
-    if(glfwGetKey(window, GLFW_KEY_CAPS_LOCK) == GLFW_PRESS)
+    if(glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS)
         cam.ProcessKeyboard(ICamera::DOWN, deltaTime);
     //return 0;
 }

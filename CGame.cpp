@@ -110,7 +110,7 @@ void CGame::loop() {
             obj->Draw();
 
         //_lightList[0]->SetPos(glm::vec3((float)sin(currentFrame)*10, 5.0f, (float)cos(currentFrame)*10));
-        _lightList[0]->SetPos(glm::vec3((float)sin(currentFrame)*5, 5.0f, 0.0f));
+        _lightList[0]->SetPos(glm::vec3((float)sin(currentFrame)*50, 5.0f, 0.0f));
 
         glfwSwapBuffers(_window);
         glfwPollEvents();

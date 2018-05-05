@@ -23,6 +23,7 @@ class CPerspectiveCamera : public ICamera
         virtual glm::mat4       GetViewMatrix() const;
         virtual glm::mat4       GetProjMatrix() const;
         virtual glm::vec3       GetPos() { return _position; }
+        virtual glm::vec3       GetFront() { return _direction; }
 
         glm::vec3               GetPosition() const { return _position; }
         void                    SetPosition(glm::vec3 val) { _position = val; }

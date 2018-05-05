@@ -52,6 +52,7 @@ int CObject::Draw() {
         glm::vec3 diffuseColor = lightColor   * glm::vec3(0.5f); // decrease the influence
         glm::vec3 ambientColor = diffuseColor * glm::vec3(0.2f); // low influence
 
+        //color
 //        _model.SetVec3("material.ambient",  1.0f, 0.5f, 0.31f);
 //        _model.SetVec3("material.diffuse",  1.0f, 0.5f, 0.31f);
 //        _model.SetVec3("material.specular", 0.5f, 0.5f, 0.5f);
@@ -71,7 +72,20 @@ int CObject::Draw() {
         //_model.SetVec3("light.diffuse",  diffuseColor);
 
         _model.SetVec3("light.specular", 1.0f, 1.0f, 1.0f);
-        _model.SetVec3("light.position", _game.GetLightList()[0]->GetPos());
+
+        //light type
+//        _model.SetVec3("light.position", _game.GetLightList()[0]->GetPos());
+//        _model.SetVec3("light.direction", _pos - _game.GetLightList()[0]->GetPos());
+        _model.SetVec3("light.position", _game.GetCamera().GetPos());
+        _model.SetVec3("light.direction", _game.GetCamera().GetFront());
+        _model.SetFloat("light.cutOff",   glm::cos(glm::radians(7.5f)));
+        _model.SetFloat("light.outerCutOff",   glm::cos(glm::radians(17.5f)));
+
+        //distance
+        _model.SetFloat("light.constant",  1.0f);
+        _model.SetFloat("light.linear",    0.09f);
+        _model.SetFloat("light.quadratic", 0.032f);
+        //_model.SetVec3("light.direction", 0.0f, 1.0f, 0.0f);
         _model.SetVec3("viewPos", _game.GetCamera().GetPos());
         _model.SetFloat("time", glfwGetTime());
     }

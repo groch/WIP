@@ -20,6 +20,7 @@ class ICamera
         virtual glm::mat4   GetViewMatrix() const = 0;
         virtual glm::mat4   GetProjMatrix() const = 0;
         virtual glm::vec3   GetPos() = 0;
+        virtual glm::vec3   GetFront() = 0;
 
         virtual void        ProcessKeyboard(Camera_Movement, float) = 0;
         virtual void        ProcessMouseMovement(float, float, GLboolean constrainPitch = true) = 0;
