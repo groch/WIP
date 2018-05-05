@@ -19,8 +19,10 @@ class CGame
         GLFWwindow*             GetWindow() { return _window; }
         std::vector<IObject*>   GetObjList() { return _objList; }
         std::vector<IObject*>   GetLightList() { return _lightList; }
-        float                   GetAlpha() { return _alpha; }
+        float                   GetAlpha() const { return _alpha; }
         void                    AddAlpha(float);
+        bool                    GetFlash() const { return _flash; }
+        void                    ToggleFlash() { _flash = !_flash; }
 
         void                    loop();
 
@@ -36,6 +38,7 @@ class CGame
         std::vector<IObject*>   _objList;
         std::vector<IObject*>   _lightList;
         float                   _alpha;
+        bool                    _flash;
 };
 
 #endif // CGAME_H
