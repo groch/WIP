@@ -705,7 +705,7 @@
 1524795191 g:\code\bidouille\basicstart\includes\clight.h
 	<AModel.h>
 
-1525452881 source:g:\code\bidouille\wip\amodel.cpp
+1525652343 source:g:\code\bidouille\wip\amodel.cpp
 	"AModel.h"
 	<iostream>
 	<glm/gtc/type_ptr.hpp>
@@ -731,19 +731,20 @@
 	<inttypes.h>
 	<stdint.h>
 
-1525461727 source:g:\code\bidouille\wip\ccube.cpp
+1525653577 source:g:\code\bidouille\wip\ccube.cpp
 	"CCube.h"
 	"render.h"
 	<iostream>
 	<fstream>
+	<sstream>
 
 1525455408 g:\code\bidouille\wip\includes\ccube.h
 	<AModel.h>
 
-1524786609 g:\code\bidouille\wip\includes\render.h
+1525638892 g:\code\bidouille\wip\includes\render.h
 	<GL/gl.h>
 
-1525495052 source:g:\code\bidouille\wip\cgame.cpp
+1525650959 source:g:\code\bidouille\wip\cgame.cpp
 	"CGame.h"
 	"CPerspectiveCamera.h"
 	"CObject.h"
@@ -752,7 +753,7 @@
 	<iostream>
 	"IL\ilut.h"
 
-1525494833 g:\code\bidouille\wip\includes\cgame.h
+1525651596 g:\code\bidouille\wip\includes\cgame.h
 	<glad\glad.h>
 	<GLFW\glfw3.h>
 	<vector>
@@ -1292,7 +1293,7 @@
 	<iostream>
 	<fstream>
 
-1525495027 source:g:\code\bidouille\wip\cobject.cpp
+1525627273 source:g:\code\bidouille\wip\cobject.cpp
 	"CObject.h"
 	<iostream>
 	<fstream>
@@ -1396,10 +1397,11 @@
 	<windows.h>
 	<dlfcn.h>
 
-1524760079 source:g:\code\bidouille\wip\main.cpp
+1525651952 source:g:\code\bidouille\wip\main.cpp
 	"CGame.h"
+	"shader.hpp"
 
-1525462265 source:g:\code\bidouille\wip\render.cpp
+1525638877 source:g:\code\bidouille\wip\render.cpp
 	<iostream>
 	<fstream>
 	<math.h>
@@ -1408,4 +1410,184 @@
 	<stdlib.h>
 	"IL\ilut.h"
 	"render.h"
+
+1525641049 g:\code\bidouille\wip\includes\model.hpp
+	<glad/glad.h>
+	<glm/glm.hpp>
+	<glm/gtc/matrix_transform.hpp>
+	<assimp/Importer.hpp>
+	<assimp/scene.h>
+	<assimp/postprocess.h>
+	"render.h"
+	<mesh.hpp>
+	<shader.hpp>
+	<string>
+	<fstream>
+	<sstream>
+	<iostream>
+	<map>
+	<vector>
+
+1513002165 g:\code\bidouille\wip\includes\assimp\importer.hpp
+	<assimp/types.h>
+
+1513002165 g:\code\bidouille\wip\includes\assimp\types.h
+	<sys/types.h>
+	<stddef.h>
+	<string.h>
+	<limits.h>
+	"defs.h"
+	"vector3.h"
+	"vector2.h"
+	"color4.h"
+	"matrix3x3.h"
+	"matrix4x4.h"
+	"quaternion.h"
+	<cstring>
+	<new>
+	<string>
+	"vector2.inl"
+	"vector3.inl"
+	"color4.inl"
+	"quaternion.inl"
+	"matrix3x3.inl"
+	"matrix4x4.inl"
+
+1513002165 g:\code\bidouille\wip\includes\assimp\defs.h
+	<assimp/config.h>
+
+1525540501 g:\code\bidouille\wip\includes\assimp\config.h
+
+1513002165 g:\code\bidouille\wip\includes\assimp\vector3.h
+	<cmath>
+	<math.h>
+	"defs.h"
+
+1513002165 g:\code\bidouille\wip\includes\assimp\vector2.h
+	<cmath>
+	<math.h>
+	"./Compiler/pushpack1.h"
+	"defs.h"
+	"./Compiler/poppack1.h"
+
+1513002165 g:\code\bidouille\wip\includes\assimp\compiler\pushpack1.h
+
+1513002165 g:\code\bidouille\wip\includes\assimp\compiler\poppack1.h
+
+1513002165 g:\code\bidouille\wip\includes\assimp\color4.h
+	"defs.h"
+
+1513002165 g:\code\bidouille\wip\includes\assimp\matrix3x3.h
+	"defs.h"
+
+1513002165 g:\code\bidouille\wip\includes\assimp\matrix4x4.h
+	"vector3.h"
+	"defs.h"
+
+1513002165 g:\code\bidouille\wip\includes\assimp\quaternion.h
+	"defs.h"
+
+1513002165 g:\code\bidouille\wip\includes\assimp\vector2.inl
+	"vector2.h"
+	<cmath>
+
+1513002165 g:\code\bidouille\wip\includes\assimp\vector3.inl
+	"vector3.h"
+	<cmath>
+
+1513002165 g:\code\bidouille\wip\includes\assimp\color4.inl
+	"color4.h"
+
+1513002165 g:\code\bidouille\wip\includes\assimp\quaternion.inl
+	"quaternion.h"
+	<cmath>
+
+1513002165 g:\code\bidouille\wip\includes\assimp\matrix3x3.inl
+	"matrix3x3.h"
+	"matrix4x4.h"
+	<algorithm>
+	<cmath>
+	<limits>
+
+1513002165 g:\code\bidouille\wip\includes\assimp\matrix4x4.inl
+	"matrix4x4.h"
+	"matrix3x3.h"
+	"quaternion.h"
+	<algorithm>
+	<limits>
+	<cmath>
+
+1513002165 g:\code\bidouille\wip\includes\assimp\scene.h
+	"types.h"
+	"texture.h"
+	"mesh.h"
+	"light.h"
+	"camera.h"
+	"material.h"
+	"anim.h"
+	"metadata.h"
+
+1513002165 g:\code\bidouille\wip\includes\assimp\texture.h
+	"types.h"
+	"./Compiler/pushpack1.h"
+	"./Compiler/poppack1.h"
+
+1513002165 g:\code\bidouille\wip\includes\assimp\mesh.h
+	"types.h"
+
+1513002165 g:\code\bidouille\wip\includes\assimp\light.h
+	"types.h"
+
+1513002165 g:\code\bidouille\wip\includes\assimp\camera.h
+	"types.h"
+
+1513002165 g:\code\bidouille\wip\includes\assimp\material.h
+	"types.h"
+	"./Compiler/pushpack1.h"
+	"./Compiler/poppack1.h"
+	"material.inl"
+
+1513002165 g:\code\bidouille\wip\includes\assimp\material.inl
+
+1513002165 g:\code\bidouille\wip\includes\assimp\anim.h
+	<assimp/types.h>
+	<assimp/quaternion.h>
+
+1513002165 g:\code\bidouille\wip\includes\assimp\metadata.h
+	"Compiler/pstdint.h"
+	<stdint.h>
+	<string>
+
+1513002165 g:\code\bidouille\wip\includes\assimp\compiler\pstdint.h
+	<stddef.h>
+	<limits.h>
+	<signal.h>
+	<stdint.h>
+	<sys/inttypes.h>
+	<wchar.h>
+	<stdlib.h>
+	<stdio.h>
+	<string.h>
+
+1513002165 g:\code\bidouille\wip\includes\assimp\postprocess.h
+	"types.h"
+
+1525639638 g:\code\bidouille\wip\includes\mesh.hpp
+	<glad/glad.h>
+	<glm/glm.hpp>
+	<glm/gtc/matrix_transform.hpp>
+	<shader.hpp>
+	<string>
+	<fstream>
+	<sstream>
+	<iostream>
+	<vector>
+
+1525653160 g:\code\bidouille\wip\includes\shader.hpp
+	<glad/glad.h>
+	<glm/glm.hpp>
+	<string>
+	<fstream>
+	<sstream>
+	<iostream>
 

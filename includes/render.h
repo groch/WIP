@@ -3,6 +3,6 @@
 
 #include <GL/gl.h>
 
-GLuint loadImage(const char* theFileName);
+unsigned int loadImage(const char* theFileName);
 
 #endif // RENDER_H_INCLUDED

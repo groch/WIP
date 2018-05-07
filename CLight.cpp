@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <fstream>
+#include <sstream>
 
 CLight::CLight()
 {
@@ -65,13 +66,29 @@ CLight::CLight()
         25, 26, 27
     };
 
-    std::ifstream vShader("shaders\\vertexShaderLight1.shader");
-    std::ifstream fShader("shaders\\fragmentShaderLight1.shader");
-    const char *vertexShaderSource = std::string((std::istreambuf_iterator<char>(vShader)), std::istreambuf_iterator<char>()).c_str();
+    std::ifstream vShader;
+    std::ifstream fShader;
+
+    std::stringstream vShaderStream, fShaderStream;
+            // read file's buffer contents into streams
+    vShader.open("G:/code/bidouille/WIP/shaders/vertexShaderLight1.shader");
+    fShader.open("G:/code/bidouille/WIP/shaders/fragmentShaderLight1.shader");
+
+    vShaderStream << vShader.rdbuf();
+    fShaderStream << fShader.rdbuf();
+
+    vShader.close();
+    fShader.close();
+
     unsigned int myShader[2];
-    myShader[0] = makeShader(GL_VERTEX_SHADER, &vertexShaderSource);
-    const char *fragmentShaderSource = std::string((std::istreambuf_iterator<char>(fShader)), std::istreambuf_iterator<char>()).c_str();
-    myShader[1] = makeShader(GL_FRAGMENT_SHADER, &fragmentShaderSource);
+
+    std::string vertexShaderSource = vShaderStream.str();
+    const char* vertexShaderSource_cs = vertexShaderSource.c_str();
+    myShader[0] = AModel::makeShader(GL_VERTEX_SHADER, &vertexShaderSource_cs);
+
+    std::string fragmentShaderSource = fShaderStream.str();
+    const char* fragmentShaderSource_cs = fragmentShaderSource.c_str();
+    myShader[1] = makeShader(GL_FRAGMENT_SHADER, &fragmentShaderSource_cs);
 
     _shaderProgram = linkShaders(myShader, 2);
 

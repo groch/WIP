@@ -99,8 +99,10 @@ void CGame::loop() {
 
         _input.processInput(deltaTime);
 
+        //glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+        glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
         //glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-        glClearColor(0.01f, 0.01f, 0.01f, 1.0f);
+        //glClearColor(0.01f, 0.01f, 0.01f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         for (auto obj : _lightList)

@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <fstream>
+#include <sstream>
 
 CCube::CCube()
 {
@@ -65,13 +66,29 @@ CCube::CCube()
         25, 26, 27
     };
 
-    std::ifstream vShader("shaders\\vertexShader1.shader");
-    std::ifstream fShader("shaders\\fragmentShader1.shader");
-    const char *vertexShaderSource = std::string((std::istreambuf_iterator<char>(vShader)), std::istreambuf_iterator<char>()).c_str();
+    std::ifstream vShader;
+    std::ifstream fShader;
+
+    std::stringstream vShaderStream, fShaderStream;
+            // read file's buffer contents into streams
+    vShader.open("G:/code/bidouille/WIP/shaders/vertexShader1.shader");
+    fShader.open("G:/code/bidouille/WIP/shaders/fragmentShader1.shader");
+
+    vShaderStream << vShader.rdbuf();
+    fShaderStream << fShader.rdbuf();
+
+    vShader.close();
+    fShader.close();
+
     unsigned int myShader[2];
-    myShader[0] = AModel::makeShader(GL_VERTEX_SHADER, &vertexShaderSource);
-    const char *fragmentShaderSource = std::string((std::istreambuf_iterator<char>(fShader)), std::istreambuf_iterator<char>()).c_str();
-    myShader[1] = makeShader(GL_FRAGMENT_SHADER, &fragmentShaderSource);
+
+    std::string vertexShaderSource = vShaderStream.str();
+    const char* vertexShaderSource_cs = vertexShaderSource.c_str();
+    myShader[0] = AModel::makeShader(GL_VERTEX_SHADER, &vertexShaderSource_cs);
+
+    std::string fragmentShaderSource = fShaderStream.str();
+    const char* fragmentShaderSource_cs = fragmentShaderSource.c_str();
+    myShader[1] = makeShader(GL_FRAGMENT_SHADER, &fragmentShaderSource_cs);
 
     _shaderProgram = linkShaders(myShader, 2);
 
@@ -105,11 +122,11 @@ CCube::CCube()
     glEnableVertexAttribArray(3);
 
     _texId[0] = loadImage("ressources\\textures\\container2.png");
-    glUniform1i(glGetUniformLocation(_shaderProgram, "material.diffuse"), 0);
+    glUniform1i(glGetUniformLocation(_shaderProgram, "material.texture_diffuse[0]"), 0);
     _texId[1] = loadImage("ressources\\textures\\matrix.jpg");
-    glUniform1i(glGetUniformLocation(_shaderProgram, "material.emission"), 1);
+    glUniform1i(glGetUniformLocation(_shaderProgram, "material.texture_emission[0]"), 1);
     _texId[2] = loadImage("ressources\\textures\\container2_specular.png");
-    glUniform1i(glGetUniformLocation(_shaderProgram, "material.specular"), 2);
+    glUniform1i(glGetUniformLocation(_shaderProgram, "material.texture_specular[0]"), 2);
 
 //    std::cout << "texId[0]=" << _texId[0] << std::endl;
 //    std::cout << "texId[1]=" << _texId[1] << std::endl;

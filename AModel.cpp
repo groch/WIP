@@ -4,11 +4,16 @@
 #include <glm/gtc/type_ptr.hpp>
 
 unsigned int AModel::makeShader(GLenum type, const char **source) {
+    unsigned int i = 0;
     unsigned int shader;
+    std::cout << "AModel" << i++ << std::endl;
     shader = glCreateShader(type);
+    std::cout << "AModel" << i++ << std::endl;
 
     glShaderSource(shader, 1, source, NULL);
+    std::cout << "AModel" << i++ << std::endl;
     glCompileShader(shader);
+    std::cout << "AModel" << i++ << std::endl;
 
     int  success;
     char infoLog[512];

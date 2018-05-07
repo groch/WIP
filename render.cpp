@@ -11,10 +11,10 @@
 #include "render.h"
 
 // credit to https://r3dux.org/tag/ilutglloadimage/
-GLuint loadImage(const char* theFileName)
+unsigned int loadImage(const char* theFileName)
 {
 	ILuint imageID;				// Create an image ID as a ULuint
-	GLuint textureID;			// Create a texture ID as a GLuint
+	unsigned int textureID;			// Create a texture ID as a GLuint
 	ILboolean success;			// Create a flag to keep track of success/failure
 	ILenum error;				// Create a flag to keep track of the IL error state
 	ilGenImages(1, &imageID); 		// Generate the image ID

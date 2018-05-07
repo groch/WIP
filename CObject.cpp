@@ -58,9 +58,9 @@ int CObject::Draw() {
 //        _model.SetVec3("material.specular", 0.5f, 0.5f, 0.5f);
 //        _model.SetFloat("material.shininess", 32.0f);
 
-        _model.SetVec3("material.ambient",  0.0215f, 0.1745f, 0.0215f);
-        _model.SetVec3("material.diffuse",  0.07568f, 0.61424f, 0.07568f);
-        _model.SetVec3("material.specular", 0.633f, 0.727811f, 0.633f);
+//        _model.SetVec3("material.ambient",  0.0215f, 0.1745f, 0.0215f);
+//        _model.SetVec3("material.diffuse",  0.07568f, 0.61424f, 0.07568f);
+//        _model.SetVec3("material.specular", 0.633f, 0.727811f, 0.633f);
         _model.SetFloat("material.shininess", 0.6f * 128.0f);
 
         _model.SetVec3("dirLight.ambient",  ambientColor);
