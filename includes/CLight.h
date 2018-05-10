@@ -1,16 +1,15 @@
 #ifndef CLIGHT_H
 #define CLIGHT_H
 
-#include <AModel.h>
+#include <IModel.h>
 
-class CLight : public AModel
+class CLight : public IModel
 {
     public:
         CLight();
-        virtual ~CLight();
+        virtual ~CLight() throw();
 
-        virtual unsigned int    GetShaderId() { return _shaderProgram; }
-        virtual void            Draw();
+        virtual void            Draw(Shader&);
 
         unsigned int            GetVao() const { return _vao; }
         unsigned int            GetVbo() const { return _vbo; }

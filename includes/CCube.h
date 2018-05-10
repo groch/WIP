@@ -1,16 +1,15 @@
 #ifndef CCUBE_H
 #define CCUBE_H
 
-#include <AModel.h>
+#include <IModel.h>
 
-class CCube : public AModel
+class CCube : public IModel
 {
     public:
         CCube();
-        virtual ~CCube();
+        virtual ~CCube() throw();
 
-        virtual unsigned int    GetShaderId() { return _shaderProgram; }
-        virtual void            Draw();
+        virtual void            Draw(Shader&);
 
         unsigned int            GetVao() const { return _vao; }
         unsigned int            GetVbo() const { return _vbo; }

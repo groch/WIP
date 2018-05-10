@@ -28,10 +28,11 @@ unsigned int loadImage(const char* theFileName)
 		// If the image is flipped (i.e. upside-down and mirrored, flip it the right way up!)
 		ILinfo ImageInfo;
 		iluGetImageInfo(&ImageInfo);
-		if (ImageInfo.Origin == IL_ORIGIN_UPPER_LEFT)
-		{
-			iluFlipImage();
-		}
+		// not usefull as assimp already flip UV
+//		if (ImageInfo.Origin == IL_ORIGIN_UPPER_LEFT)
+//		{
+//			iluFlipImage();
+//		}
 
 		// Convert the image into a suitable format to work with
 		// NOTE: If your image contains alpha channel you can replace IL_RGB with IL_RGBA
@@ -49,6 +50,8 @@ unsigned int loadImage(const char* theFileName)
 		glBindTexture(GL_TEXTURE_2D, textureID);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+//		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
+//		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 
@@ -72,6 +75,6 @@ unsigned int loadImage(const char* theFileName)
   	}
 
  	ilDeleteImages(1, &imageID); // Because we have already copied image data into texture data we can release memory used by image.
-	std::cout << "Texture creation successful." << std::endl;
+	std::cout << "Texture creation successful.ID=" << textureID << std::endl;
 	return textureID; // Return the GLuint to the texture so you can use it!
 }

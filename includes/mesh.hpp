@@ -34,35 +34,40 @@ struct Texture {
     string path;
 };
 
+struct Material {
+    glm::vec3 ambient;
+    glm::vec3 diffuse;
+    glm::vec3 specular;
+    glm::vec3 emission;
+    float shininess;
+};
+
 class Mesh {
 public:
     /*  Mesh Data  */
     vector<Vertex> vertices;
     vector<unsigned int> indices;
     vector<Texture> textures;
+    Material material;
     unsigned int VAO;
 
     /*  Functions  */
     // constructor
-    Mesh(vector<Vertex> vertices, vector<unsigned int> indices, vector<Texture> textures)
+    Mesh(vector<Vertex> v, vector<unsigned int> i, vector<Texture> t, Material m) : vertices(v), indices(i), textures(t), material(m), VAO(0), VBO(0), EBO(0)
     {
-        this->vertices = vertices;
-        this->indices = indices;
-        this->textures = textures;
-
         // now that we have all the required data, set the vertex buffers and its attribute pointers.
         setupMesh();
     }
 
     // render the mesh
-    void Draw(Shader shader)
+    void Draw(Shader& shader)
     {
         // bind appropriate textures
-        unsigned int diffuseNr  = 1;
-        unsigned int specularNr = 1;
-        unsigned int normalNr   = 1;
-        unsigned int heightNr   = 1;
-        unsigned int emissionNr   = 1;
+        unsigned int diffuseNr  = 0;
+        unsigned int specularNr = 0;
+        unsigned int normalNr   = 0;
+        unsigned int heightNr   = 0;
+        unsigned int emissionNr = 0;
         for(unsigned int i = 0; i < textures.size(); i++)
         {
             glActiveTexture(GL_TEXTURE0 + i); // active proper texture unit before binding
@@ -82,13 +87,28 @@ public:
 
 													 // now set the sampler to the correct texture unit
             glUniform1i(glGetUniformLocation(shader.ID, ("material." + name + "[" + number + "]").c_str()), i);
+//            std::cout << "ID\"" << ("material." + name + "[" + number + "]") << "\"=" << i << std::endl;
             // and finally bind the texture
             glBindTexture(GL_TEXTURE_2D, textures[i].id);
         }
 
+        // texture count
+        glUniform1i(glGetUniformLocation(shader.ID, "material.texture_diffuse_count"), diffuseNr);
+        glUniform1i(glGetUniformLocation(shader.ID, "material.texture_specular_count"), specularNr);
+        glUniform1i(glGetUniformLocation(shader.ID, "material.texture_normal_count"), normalNr);
+        glUniform1i(glGetUniformLocation(shader.ID, "material.texture_height_count"), heightNr);
+        glUniform1i(glGetUniformLocation(shader.ID, "material.texture_emission_count"), emissionNr);
+
+        shader.setVec3("material.ambient", material.ambient);
+        shader.setVec3("material.diffuse", material.diffuse);
+        shader.setVec3("material.specular", material.specular);
+        shader.setVec3("material.emission", material.emission);
+        shader.setFloat("material.shininess", material.shininess);
+
         // draw mesh
         glBindVertexArray(VAO);
-        glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
+//        std::cout << "Draw size=" << indices.size() << std::endl;
+        glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, nullptr);
         glBindVertexArray(0);
 
         // always good practice to set everything back to defaults once configured.
@@ -122,7 +142,7 @@ private:
         // set the vertex attribute pointers
         // vertex Positions
         glEnableVertexAttribArray(0);
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)nullptr);
         // vertex normals
         glEnableVertexAttribArray(1);
         glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Normal));

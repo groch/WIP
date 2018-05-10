@@ -30,37 +30,23 @@ pri:
 	GLFWwindow*
 	CInputHandler
 	
+	setUniforms(shader)
+	
 CObjectManager
     build/load from file
         load associated shader & link to program
 
-
+		
+textureManager ?
 
 
 
 
 CModel / IModel
     public:
-		build()
-		UseShaderProgram()
         draw()
-		
-		SetBool
-		SetInt
-		SetFloat
-		SetVec2
-		SetVec3
-		SetVec4
-		SetMat2
-		SetMat3
-		SetMat4
-		
-
-
+	
     private:
-        unsigned int shaderProgram;
-        unsigned int VAO;
-        unsigned int VBO; (for deallocation purpose)
 		CGame&
 
 CObject / IObject
@@ -69,5 +55,6 @@ CObject / IObject
 	pri:
 		IObject&	_model
 		vec3		_pos
-		vec3		_rot
+		vec3		_rot ? (after seeing quaternions
 		vec3		_scale
+		CGame&		_game

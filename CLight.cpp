@@ -5,7 +5,7 @@
 #include <fstream>
 #include <sstream>
 
-CLight::CLight()
+CLight::CLight() : _vao(), _vbo(), _ebo()
 {
     //ctor
         //ctor
@@ -66,34 +66,6 @@ CLight::CLight()
         25, 26, 27
     };
 
-    std::ifstream vShader;
-    std::ifstream fShader;
-
-    std::stringstream vShaderStream, fShaderStream;
-            // read file's buffer contents into streams
-    vShader.open("G:/code/bidouille/WIP/shaders/vertexShaderLight1.shader");
-    fShader.open("G:/code/bidouille/WIP/shaders/fragmentShaderLight1.shader");
-
-    vShaderStream << vShader.rdbuf();
-    fShaderStream << fShader.rdbuf();
-
-    vShader.close();
-    fShader.close();
-
-    unsigned int myShader[2];
-
-    std::string vertexShaderSource = vShaderStream.str();
-    const char* vertexShaderSource_cs = vertexShaderSource.c_str();
-    myShader[0] = AModel::makeShader(GL_VERTEX_SHADER, &vertexShaderSource_cs);
-
-    std::string fragmentShaderSource = fShaderStream.str();
-    const char* fragmentShaderSource_cs = fragmentShaderSource.c_str();
-    myShader[1] = makeShader(GL_FRAGMENT_SHADER, &fragmentShaderSource_cs);
-
-    _shaderProgram = linkShaders(myShader, 2);
-
-    glUseProgram(_shaderProgram);
-
     glGenVertexArrays(1, &_vao);
     glGenBuffers(1, &_vbo);
     glGenBuffers(1, &_ebo);
@@ -109,7 +81,7 @@ CLight::CLight()
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
     // 3. then set our vertex attributes pointers
     // pos
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)nullptr);
     glEnableVertexAttribArray(0);
 
 //    _texId[0] = loadImage("ressources\\textures\\wall.jpg");
@@ -121,7 +93,7 @@ CLight::CLight()
 //    std::cout << "texId[1]=" << _texId[1] << std::endl;
 }
 
-CLight::~CLight()
+CLight::~CLight() throw ()
 {
     //dtor
     glDeleteVertexArrays(1, &_vao);
@@ -129,7 +101,8 @@ CLight::~CLight()
     glDeleteBuffers(1, &_ebo);
 }
 
-void    CLight::Draw() {
+void    CLight::Draw(Shader& shader) {
+    shader.use();
 //    glActiveTexture(GL_TEXTURE0);
 //    glBindTexture(GL_TEXTURE_2D, _texId[0]);
 //    glActiveTexture(GL_TEXTURE1);
@@ -138,5 +111,8 @@ void    CLight::Draw() {
     glBindVertexArray(_vao);
 
     //glDrawArrays(GL_TRIANGLES, 0, 36);
-    glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+    glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, nullptr);
+
+    glBindVertexArray(0);
+    glActiveTexture(GL_TEXTURE0);
 }

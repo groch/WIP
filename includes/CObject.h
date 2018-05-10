@@ -5,17 +5,17 @@
 
 #include "CPerspectiveCamera.h"
 #include "IObject.h"
-#include "AModel.h"
+#include "IModel.h"
 
 class CGame;
 
 class CObject : public IObject
 {
     public:
-        CObject(CGame&, AModel&, glm::vec3, bool = false, bool = false);
+        CObject(CGame&, IModel&, glm::vec3, glm::vec3 = glm::vec3(1.0f), bool = false, bool = false);
         virtual ~CObject();
 
-        virtual int     Draw();
+        virtual int             Draw(Shader&);
 
         virtual glm::vec3       GetPos() { return _pos; }
         virtual void            SetPos(glm::vec3 pos) { _pos = pos; }
@@ -23,10 +23,11 @@ class CObject : public IObject
     protected:
 
     private:
-        AModel&         _model;
+        IModel&         _model;
         bool            _turning;
 
         glm::vec3       _pos;
+        glm::vec3       _scale;
         bool            _isLight;
 
         CGame&          _game;

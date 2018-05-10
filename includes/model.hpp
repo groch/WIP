@@ -11,9 +11,10 @@
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 
+
 #include "render.h"
-#include <mesh.hpp>
 #include <shader.hpp>
+#include <mesh.hpp>
 
 #include <string>
 #include <fstream>
@@ -23,9 +24,11 @@
 #include <vector>
 using namespace std;
 
-unsigned int TextureFromFile(const char *path, const string &directory, bool gamma = false);
+#include "IModel.h"
 
-class Model
+//unsigned int TextureFromFile(const char *path, const string &directory, bool gamma = false);
+
+class Model : public IModel
 {
 public:
     /*  Model Data */
@@ -36,13 +39,13 @@ public:
 
     /*  Functions   */
     // constructor, expects a filepath to a 3D model.
-    Model(string const &path, bool gamma = false) : gammaCorrection(gamma)
+    Model(string const &path, bool gamma = false) : textures_loaded(), meshes(), directory(""), gammaCorrection(gamma)
     {
         loadModel(path);
     }
 
     // draws the model, and thus all its meshes
-    void Draw(Shader shader)
+    void Draw(Shader &shader)
     {
         for(unsigned int i = 0; i < meshes.size(); i++)
             meshes[i].Draw(shader);
@@ -72,6 +75,7 @@ private:
     // processes a node in a recursive fashion. Processes each individual mesh located at the node and repeats this process on its children nodes (if any).
     void processNode(aiNode *node, const aiScene *scene)
     {
+        std::cout << "processNode" << std::endl;
         // process each mesh located at the current node
         for(unsigned int i = 0; i < node->mNumMeshes; i++)
         {
@@ -90,6 +94,7 @@ private:
 
     Mesh processMesh(aiMesh *mesh, const aiScene *scene)
     {
+        std::cout << "processMesh" << std::endl;
         // data to fill
         vector<Vertex> vertices;
         vector<unsigned int> indices;
@@ -122,16 +127,19 @@ private:
             }
             else
                 vertex.TexCoords = glm::vec2(0.0f, 0.0f);
-            // tangent
-            vector.x = mesh->mTangents[i].x;
-            vector.y = mesh->mTangents[i].y;
-            vector.z = mesh->mTangents[i].z;
-            vertex.Tangent = vector;
-            // bitangent
-            vector.x = mesh->mBitangents[i].x;
-            vector.y = mesh->mBitangents[i].y;
-            vector.z = mesh->mBitangents[i].z;
-            vertex.Bitangent = vector;
+
+            if (mesh->HasTangentsAndBitangents()) {
+                // tangent
+                vector.x = mesh->mTangents[i].x;
+                vector.y = mesh->mTangents[i].y;
+                vector.z = mesh->mTangents[i].z;
+                vertex.Tangent = vector;
+                // bitangent
+                vector.x = mesh->mBitangents[i].x;
+                vector.y = mesh->mBitangents[i].y;
+                vector.z = mesh->mBitangents[i].z;
+                vertex.Bitangent = vector;
+            }
             vertices.push_back(vertex);
         }
         // now wak through each of the mesh's faces (a face is a mesh its triangle) and retrieve the corresponding vertex indices.
@@ -144,6 +152,26 @@ private:
         }
         // process materials
         aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
+        Material m;
+        aiColor3D color (0.f,0.f,0.f);
+        material->Get(AI_MATKEY_COLOR_AMBIENT, color);
+        m.ambient.r = color.r;
+        m.ambient.g = color.g;
+        m.ambient.b = color.b;
+        material->Get(AI_MATKEY_COLOR_DIFFUSE, color);
+        m.diffuse.r = color.r;
+        m.diffuse.g = color.g;
+        m.diffuse.b = color.b;
+        material->Get(AI_MATKEY_COLOR_SPECULAR, color);
+        m.specular.r = color.r;
+        m.specular.g = color.g;
+        m.specular.b = color.b;
+        material->Get(AI_MATKEY_COLOR_EMISSIVE, color);
+        m.emission.r = color.r;
+        m.emission.g = color.g;
+        m.emission.b = color.b;
+        material->Get(AI_MATKEY_SHININESS, m.shininess);
+
         // we assume a convention for sampler names in the shaders. Each diffuse texture should be named
         // as 'texture_diffuseN' where N is a sequential number ranging from 1 to MAX_SAMPLER_NUMBER.
         // Same applies to other texture as the following list summarizes:
@@ -168,7 +196,7 @@ private:
         textures.insert(textures.end(), emissionMaps.begin(), emissionMaps.end());
 
         // return a mesh object created from the extracted mesh data
-        return Mesh(vertices, indices, textures);
+        return Mesh(vertices, indices, textures, m);
     }
 
     // checks all material textures of a given type and loads the textures if they're not loaded yet.
@@ -202,6 +230,7 @@ private:
                 texture.path = str.C_Str();
                 textures.push_back(texture);
                 textures_loaded.push_back(texture);  // store it as texture loaded for entire model, to ensure we won't unnecesery load duplicate textures.
+                std::cout << "new texture, path=" << texture.path << ", type=" << texture.type << std::endl;
             }
         }
         return textures;

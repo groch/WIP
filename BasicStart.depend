@@ -705,15 +705,16 @@
 1524795191 g:\code\bidouille\basicstart\includes\clight.h
 	<AModel.h>
 
-1525652343 source:g:\code\bidouille\wip\amodel.cpp
+1525832557 source:g:\code\bidouille\wip\amodel.cpp
 	"AModel.h"
 	<iostream>
 	<glm/gtc/type_ptr.hpp>
 
-1525452740 g:\code\bidouille\wip\includes\amodel.h
+1525876144 g:\code\bidouille\wip\includes\amodel.h
 	<glad\glad.h>
 	<string>
 	<glm/glm.hpp>
+	<shader.hpp>
 
 1524113228 g:\code\bidouille\wip\includes\glad\glad.h
 	<windows.h>
@@ -731,20 +732,20 @@
 	<inttypes.h>
 	<stdint.h>
 
-1525653577 source:g:\code\bidouille\wip\ccube.cpp
+1525972464 source:g:\code\bidouille\wip\ccube.cpp
 	"CCube.h"
 	"render.h"
 	<iostream>
 	<fstream>
 	<sstream>
 
-1525455408 g:\code\bidouille\wip\includes\ccube.h
-	<AModel.h>
+1525877129 g:\code\bidouille\wip\includes\ccube.h
+	<IModel.h>
 
 1525638892 g:\code\bidouille\wip\includes\render.h
 	<GL/gl.h>
 
-1525650959 source:g:\code\bidouille\wip\cgame.cpp
+1525968769 source:g:\code\bidouille\wip\cgame.cpp
 	"CGame.h"
 	"CPerspectiveCamera.h"
 	"CObject.h"
@@ -752,6 +753,7 @@
 	"CLight.h"
 	<iostream>
 	"IL\ilut.h"
+	"model.hpp"
 
 1525651596 g:\code\bidouille\wip\includes\cgame.h
 	<glad\glad.h>
@@ -782,8 +784,9 @@
 	<GL/glext.h>
 	<GL/glu.h>
 
-1524797079 g:\code\bidouille\wip\includes\iobject.h
+1525876468 g:\code\bidouille\wip\includes\iobject.h
 	<glm/glm.hpp>
+	<shader.hpp>
 
 1508684289 g:\code\bidouille\wip\includes\glm\glm.hpp
 	"detail/_fixes.hpp"
@@ -1237,17 +1240,17 @@
 	<glad\glad.h>
 	<GLFW\glfw3.h>
 
-1525490897 g:\code\bidouille\wip\includes\cperspectivecamera.h
+1525880056 g:\code\bidouille\wip\includes\cperspectivecamera.h
 	"ICamera.h"
 
-1524797107 g:\code\bidouille\wip\includes\cobject.h
+1525884072 g:\code\bidouille\wip\includes\cobject.h
 	<glad\glad.h>
 	"CPerspectiveCamera.h"
 	"IObject.h"
-	"AModel.h"
+	"IModel.h"
 
-1524795191 g:\code\bidouille\wip\includes\clight.h
-	<AModel.h>
+1525877656 g:\code\bidouille\wip\includes\clight.h
+	<IModel.h>
 
 1483218834 g:\code\bidouille\wip\includes\il\ilut.h
 	<IL/il.h>
@@ -1287,13 +1290,14 @@
 	"CInputHandler.h"
 	"CGame.h"
 
-1524795262 source:g:\code\bidouille\wip\clight.cpp
+1525879486 source:g:\code\bidouille\wip\clight.cpp
 	"CLight.h"
 	"render.h"
 	<iostream>
 	<fstream>
+	<sstream>
 
-1525627273 source:g:\code\bidouille\wip\cobject.cpp
+1525979635 source:g:\code\bidouille\wip\cobject.cpp
 	"CObject.h"
 	<iostream>
 	<fstream>
@@ -1397,11 +1401,10 @@
 	<windows.h>
 	<dlfcn.h>
 
-1525651952 source:g:\code\bidouille\wip\main.cpp
+1525826300 source:g:\code\bidouille\wip\main.cpp
 	"CGame.h"
-	"shader.hpp"
 
-1525638877 source:g:\code\bidouille\wip\render.cpp
+1525970564 source:g:\code\bidouille\wip\render.cpp
 	<iostream>
 	<fstream>
 	<math.h>
@@ -1411,7 +1414,7 @@
 	"IL\ilut.h"
 	"render.h"
 
-1525641049 g:\code\bidouille\wip\includes\model.hpp
+1525967076 g:\code\bidouille\wip\includes\model.hpp
 	<glad/glad.h>
 	<glm/glm.hpp>
 	<glm/gtc/matrix_transform.hpp>
@@ -1419,14 +1422,15 @@
 	<assimp/scene.h>
 	<assimp/postprocess.h>
 	"render.h"
-	<mesh.hpp>
 	<shader.hpp>
+	<mesh.hpp>
 	<string>
 	<fstream>
 	<sstream>
 	<iostream>
 	<map>
 	<vector>
+	"IModel.h"
 
 1513002165 g:\code\bidouille\wip\includes\assimp\importer.hpp
 	<assimp/types.h>
@@ -1456,7 +1460,7 @@
 1513002165 g:\code\bidouille\wip\includes\assimp\defs.h
 	<assimp/config.h>
 
-1525540501 g:\code\bidouille\wip\includes\assimp\config.h
+1525655421 g:\code\bidouille\wip\includes\assimp\config.h
 
 1513002165 g:\code\bidouille\wip\includes\assimp\vector3.h
 	<cmath>
@@ -1572,7 +1576,7 @@
 1513002165 g:\code\bidouille\wip\includes\assimp\postprocess.h
 	"types.h"
 
-1525639638 g:\code\bidouille\wip\includes\mesh.hpp
+1525967406 g:\code\bidouille\wip\includes\mesh.hpp
 	<glad/glad.h>
 	<glm/glm.hpp>
 	<glm/gtc/matrix_transform.hpp>
@@ -1583,11 +1587,14 @@
 	<iostream>
 	<vector>
 
-1525653160 g:\code\bidouille\wip\includes\shader.hpp
+1525832655 g:\code\bidouille\wip\includes\shader.hpp
 	<glad/glad.h>
 	<glm/glm.hpp>
 	<string>
 	<fstream>
 	<sstream>
 	<iostream>
+
+1525877030 g:\code\bidouille\wip\includes\imodel.h
+	<shader.hpp>
 
