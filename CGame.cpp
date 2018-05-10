@@ -107,7 +107,7 @@ void CGame::loop() {
     for (glm::vec3& vec : cubePositions)
         _objList.push_back(new CObject(*this, *cube, vec, glm::vec3(1.0f), (i++ % 3 == 0)));
 
-    _objList.push_back(new CObject(*this, nanosuit, glm::vec3(0.0f, -2.25f, 7.0f), glm::vec3(0.2f)));
+    _objList.push_back(new CObject(*this, nanosuit, glm::vec3(0.0f, -2.25f, 7.0f), glm::vec3(0.2f), true));
     _objList.push_back(new CObject(*this, churros, glm::vec3(-5.0f, -1.75f, 0.0f), glm::vec3(0.2f)));
     _objList.push_back(new CObject(*this, anvil, glm::vec3(5.0f, -1.75f, 0.0f), glm::vec3(0.2f)));
 

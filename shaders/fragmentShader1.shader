@@ -82,19 +82,19 @@ uniform SpotLight spotLight;
 
 vec3 GetAmbientColor() {
     if (material.texture_diffuse_count > 0)
-        return vec3(texture(material.texture_diffuse[0], fs_in.TexCoords));
+        return texture(material.texture_diffuse[0], fs_in.TexCoords).rgb;
     return material.ambient;
 }
 
 vec3 GetDiffuseColor() {
     if (material.texture_diffuse_count > 0)
-        return vec3(texture(material.texture_diffuse[0], fs_in.TexCoords));
+        return texture(material.texture_diffuse[0], fs_in.TexCoords).rgb;
     return material.diffuse;
 }
 
 vec3 GetSpecularColor() {
     if (material.texture_specular_count > 0)
-        return vec3(texture(material.texture_specular[0], fs_in.TexCoords));
+        return texture(material.texture_specular[0], fs_in.TexCoords).rgb;
     return material.specular;
 }
 
@@ -153,7 +153,7 @@ vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
 
 vec3 CalcSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir) {
     vec3 lightDirBasic = normalize(light.position - fs_in.FragPos);
-    vec3 lightDir = normalize(light.position * fs_in.TBN - fragPos);
+    vec3 lightDir = normalize(light.position - fragPos);
 
     float theta = dot(lightDirBasic, normalize(-light.direction));
     //float theta = dot(lightDir, normalize(-light.direction * fs_in.TBN));
@@ -175,9 +175,9 @@ vec3 CalcSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir) {
         vec3 diffuse  = light.diffuse  * diff * GetDiffuseColor();
 
         vec3 reflectDir = reflect(-lightDir, normal);
-        //float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
-        vec3 halfwayDir = normalize(lightDir + viewDir);
-        float spec = pow(max(dot(normal, halfwayDir), 0.0), material.shininess);
+        float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
+        //vec3 halfwayDir = normalize(lightDir + viewDir);
+        //float spec = pow(max(dot(normal, halfwayDir), 0.0), material.shininess);
         vec3 specular = light.specular * spec * GetSpecularColor();
 
         diffuse  *= attenuation * intensity;

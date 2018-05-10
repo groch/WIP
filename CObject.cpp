@@ -32,7 +32,7 @@ int CObject::Draw(Shader& shader) {
     glm::mat4 model = glm::mat4(1.0f);
     model = glm::translate(model, _pos);
     if (_turning)
-        model = glm::rotate(model, (float)glfwGetTime() * glm::radians(50.0f), glm::vec3(0.5, 1.0, 0.0));
+        model = glm::rotate(model, (float)glfwGetTime() * glm::radians(50.0f), glm::vec3(0.0, 1.0, 0.0));
     model = glm::scale(model, _scale);
 
     glm::mat4 view = _game.GetCamera().GetViewMatrix();
@@ -68,8 +68,8 @@ int CObject::Draw(Shader& shader) {
         shader.setVec3("dirLight.ambient", 0.01f, 0.01f, 0.01f);
         shader.setVec3("dirLight.diffuse", 0.8f, 0.8f, 0.8f);
         shader.setVec3("dirLight.specular", 1.0f, 1.0f, 1.0f);
-        //shader.setVec3("dirLight.direction", (float)sin(glfwGetTime()), 0.0f, -1.0f);
-        shader.setVec3("dirLight.direction", 0.0f, 0.0f, -1.0f);
+        shader.setVec3("dirLight.direction", (float)sin(glfwGetTime()*0.5), 0.0f, -1.0f);
+        //shader.setVec3("dirLight.direction", 0.0f, 0.0f, 1.0f);
 
 
         shader.setInt("nbPointLight", 1);
