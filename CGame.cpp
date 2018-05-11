@@ -77,9 +77,10 @@ void CGame::loop() {
     Shader shaderObjTBN("G:/code/bidouille/WIP/shaders/vertexShader1.vert", "G:/code/bidouille/WIP/shaders/fragmentShaderTBN1.frag");
     Shader shaderLight("G:/code/bidouille/WIP/shaders/vertexShaderLight1.vert", "G:/code/bidouille/WIP/shaders/fragmentShaderLight1.frag");
     Shader shaderStencil("G:/code/bidouille/WIP/shaders/vertexShaderLight1.vert", "G:/code/bidouille/WIP/shaders/SingleColorFragment.frag");
+    Shader shaderGeoNorm("G:/code/bidouille/WIP/shaders/vertexShaderGeoNorm1.vert", "G:/code/bidouille/WIP/shaders/SingleColorFragment.frag", "G:/code/bidouille/WIP/shaders/geoNorm.geom");
 
-    shaderStencil.use();
-    shaderStencil.setVec3("color", 1.0f, 0.8125f, 0.0f);
+    shaderGeoNorm.use();
+    shaderGeoNorm.setVec3("color", 1.0f, 0.8125f, 0.0f);
 
     Model nanosuit("G:/code/bidouille/WIP/ressources/models/nanosuit/nanosuit.obj");
     //Model nanosuit("G:/code/bidouille/WIP/ressources/models/anvil.blend");
@@ -119,9 +120,9 @@ void CGame::loop() {
     for (glm::vec3& vec : cubePositions)
         _objList.push_back(new CObject(*this, *cube, vec, glm::vec3(1.0f), (i++ % 3 == 0)));
 
-    _objList.push_back(new CObject(*this, nanosuit, glm::vec3(0.0f, -2.25f, 7.0f), glm::vec3(0.2f), true));
+    CObject nanoObj(*this, nanosuit, glm::vec3(0.0f, -2.25f, 7.0f), glm::vec3(0.2f), false);
     _objList.push_back(new CObject(*this, churros, glm::vec3(-5.0f, -1.75f, 0.0f), glm::vec3(0.2f)));
-    CObject anvilObj(*this, anvil, glm::vec3(5.0f, -1.75f, 0.0f), glm::vec3(0.2f));
+    CObject anvilObj(*this, anvil, glm::vec3(5.0f, -1.75f, 0.0f), glm::vec3(0.5f));
 
     //glm::vec3 cam = glm::vec3(0.0f, 0.0f, -3.0f);
     glfwSetInputMode(_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
@@ -155,6 +156,10 @@ void CGame::loop() {
             obj->Draw(shaderObj, glm::vec3(1.0f));
 
         anvilObj.Draw(shaderObjTBN, glm::vec3(1.0f));
+        nanoObj.Draw(shaderObj, glm::vec3(1.0f));
+
+        anvilObj.Draw(shaderGeoNorm, glm::vec3(1.0f));
+        nanoObj.Draw(shaderGeoNorm, glm::vec3(1.0f));
 
 //        glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
 //        glStencilMask(0x00);

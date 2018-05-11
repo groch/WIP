@@ -37,15 +37,16 @@ void main()
     vec3 N = normalize(nm * aNormal);
     vs_out.Normal = N;
 
-//    T = normalize(T - dot(T, N) * N);
-//    B = cross(N, T);
     // TBN must form a right handed coord system.
     // Some models have symetric UVs. Check and fix.
     if (dot(cross(N, T), B) < 0.0)
         T = T * -1.0;
 
+    T = normalize(T - dot(T, N) * N);
+    B = cross(N, T);
+
     //vs_out.TBN = transpose(mat3(T, B, N));
-    vs_out.TBN = mat3(T, B, N);
+    vs_out.TBN = transpose(mat3(T, B, N));
 
 //    vs_out.TangentLightPos = TBN * lightPos;
     vs_out.TangentViewPos  = vs_out.TBN * viewPos;
