@@ -105,8 +105,8 @@ vec3 GetEmissionColor() {
 }
 
 vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir) {
-//    vec3 lightDir = normalize(-light.direction * fs_in.TBN);
-    vec3 lightDir = normalize(-light.direction);
+    vec3 lightDir = normalize(-light.direction * fs_in.TBN);
+//    vec3 lightDir = normalize(-light.direction);
     // diffuse shading
     //float diff = max(dot(normal, lightDir), 0.0);
     float diff = max(dot(lightDir, normal), 0.0);
@@ -124,7 +124,8 @@ vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir) {
 
 vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
 {
-    vec3 lightDir = normalize(light.position - fragPos);
+    vec3 lightDir = normalize(light.position * fs_in.TBN - fragPos);
+    //vec3 lightDir = normalize(light.position - fragPos);
     // diffuse shading
     //float diff = max(dot(normal, lightDir), 0.0);
     float diff = max(dot(lightDir, normal), 0.0);
@@ -137,7 +138,7 @@ vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
 
 
     // attenuation
-    float distance    = length(light.position - fragPos);
+    float distance    = length(light.position * fs_in.TBN - fragPos);
     float attenuation = 1.0 / (light.constant + light.linear * distance +
   			     light.quadratic * (distance * distance));
     // combine results
@@ -151,18 +152,18 @@ vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
 }
 
 vec3 CalcSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir) {
-    vec3 lightDir = normalize(light.position - fragPos);
-//    vec3 lightDir = normalize(light.position * fs_in.TBN - fragPos);
+    //vec3 lightDir = normalize(light.position - fragPos);
+    vec3 lightDir = normalize(light.position * fs_in.TBN - fragPos);
 
-    float theta = dot(lightDir, normalize(-light.direction));
-//    float theta = dot(lightDir, normalize(-light.direction * fs_in.TBN));
+    //float theta = dot(lightDir, normalize(-light.direction));
+    float theta = dot(lightDir, normalize(-light.direction * fs_in.TBN));
     float epsilon   = light.cutOff - light.outerCutOff;
     float intensity = clamp((theta - light.outerCutOff) / epsilon, 0.0, 1.0);
 
     vec3 ambient  = light.ambient  * GetAmbientColor();
 
-    float distance    = length(light.position - fragPos);
-//    float distance    = length(light.position * fs_in.TBN - fragPos);
+    //float distance    = length(light.position - fragPos);
+    float distance    = length(light.position * fs_in.TBN - fragPos);
     float attenuation = 1.0 / (light.constant + light.linear * distance +
   			     light.quadratic * (distance * distance));
 
@@ -206,13 +207,13 @@ void main()
     vec3 norm = fs_in.Normal;
     if (material.texture_normal_count > 0) {
         //apply texture normal normalized to normal matrix
-        norm *= vec3(texture(material.texture_normal[0], fs_in.TexCoords)) * 2 - 1;
-        //norm = texture(material.texture_normal[0], fs_in.TexCoords).rgb * 2 - 1;
+        //norm *= vec3(texture(material.texture_normal[0], fs_in.TexCoords)) * 2 - 1;
+        norm = texture(material.texture_normal[0], fs_in.TexCoords).rgb * 2 - 1;
         norm = normalize(norm);
     }
 
-//    vec3 viewDir = normalize(fs_in.TangentViewPos - fs_in.TangentFragPos);
-    vec3 viewDir = normalize(viewPos - fs_in.FragPos);
+    vec3 viewDir = normalize(fs_in.TangentViewPos - fs_in.TangentFragPos);
+    //vec3 viewDir = normalize(viewPos - fs_in.FragPos);
 
     vec3 emission = GetEmissionColor();
 
@@ -221,11 +222,11 @@ void main()
     result = CalcDirLight(dirLight, norm, viewDir);
     // phase 2: Point lights
     for(int i = 0; i < nbPointLight; i++)
-        result += CalcPointLight(pointLights[i], norm, fs_in.FragPos, viewDir);
-//        result += CalcPointLight(pointLights[i], norm, fs_in.TangentFragPos, viewDir);
+        //result += CalcPointLight(pointLights[i], norm, fs_in.FragPos, viewDir);
+        result += CalcPointLight(pointLights[i], norm, fs_in.TangentFragPos, viewDir);
     // phase 3: Spot light
-    result += CalcSpotLight(spotLight, norm, fs_in.FragPos, viewDir);
-//    result += CalcSpotLight(spotLight, norm, fs_in.TangentFragPos, viewDir);
+    //result += CalcSpotLight(spotLight, norm, fs_in.FragPos, viewDir);
+    result += CalcSpotLight(spotLight, norm, fs_in.TangentFragPos, viewDir);
     result += emission;
 
     FragColor = vec4(result, 1.0);

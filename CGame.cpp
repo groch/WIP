@@ -74,6 +74,7 @@ int CGame::setup() {
 
 void CGame::loop() {
     Shader shaderObj("G:/code/bidouille/WIP/shaders/vertexShader1.vert", "G:/code/bidouille/WIP/shaders/fragmentShader1.frag");
+    Shader shaderObjTBN("G:/code/bidouille/WIP/shaders/vertexShader1.vert", "G:/code/bidouille/WIP/shaders/fragmentShaderTBN1.frag");
     Shader shaderLight("G:/code/bidouille/WIP/shaders/vertexShaderLight1.vert", "G:/code/bidouille/WIP/shaders/fragmentShaderLight1.frag");
     Shader shaderStencil("G:/code/bidouille/WIP/shaders/vertexShaderLight1.vert", "G:/code/bidouille/WIP/shaders/SingleColorFragment.frag");
 
@@ -120,7 +121,7 @@ void CGame::loop() {
 
     _objList.push_back(new CObject(*this, nanosuit, glm::vec3(0.0f, -2.25f, 7.0f), glm::vec3(0.2f), true));
     _objList.push_back(new CObject(*this, churros, glm::vec3(-5.0f, -1.75f, 0.0f), glm::vec3(0.2f)));
-    _objList.push_back(new CObject(*this, anvil, glm::vec3(5.0f, -1.75f, 0.0f), glm::vec3(0.2f)));
+    CObject anvilObj(*this, anvil, glm::vec3(5.0f, -1.75f, 0.0f), glm::vec3(0.2f));
 
     //glm::vec3 cam = glm::vec3(0.0f, 0.0f, -3.0f);
     glfwSetInputMode(_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
@@ -152,6 +153,8 @@ void CGame::loop() {
 
         for (auto obj : _objList)
             obj->Draw(shaderObj, glm::vec3(1.0f));
+
+        anvilObj.Draw(shaderObjTBN, glm::vec3(1.0f));
 
 //        glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
 //        glStencilMask(0x00);
