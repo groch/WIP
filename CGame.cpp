@@ -58,8 +58,8 @@ int CGame::setup() {
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
     glEnable(GL_STENCIL_TEST);
-    glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
-    glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
+//    glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
+//    glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
     glEnable(GL_CULL_FACE);
     glCullFace(GL_FRONT);
     glFrontFace(GL_CW);
@@ -142,26 +142,26 @@ void CGame::loop() {
         //glClearColor(0.01f, 0.01f, 0.01f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
-        glStencilMask(0x00);
+        //glStencilMask(0x00);
 
         for (auto obj : _lightList)
             obj->Draw(shaderLight, glm::vec3(1.0f));
 
-        glStencilFunc(GL_ALWAYS, 1, 0xFF);
-        glStencilMask(0xFF);
+//        glStencilFunc(GL_ALWAYS, 1, 0xFF);
+//        glStencilMask(0xFF);
 
         for (auto obj : _objList)
             obj->Draw(shaderObj, glm::vec3(1.0f));
 
-        glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
-        glStencilMask(0x00);
-        glDisable(GL_DEPTH_TEST);
+//        glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
+//        glStencilMask(0x00);
+//        glDisable(GL_DEPTH_TEST);
 
-        for (auto obj : _objList)
-            obj->Draw(shaderStencil, glm::vec3(1.1f));
-
-        glStencilMask(0xFF);
-        glEnable(GL_DEPTH_TEST);
+//        for (auto obj : _objList)
+//            obj->Draw(shaderStencil, glm::vec3(1.1f));
+//
+//        glStencilMask(0xFF);
+//        glEnable(GL_DEPTH_TEST);
 
 
         glfwSwapBuffers(_window);

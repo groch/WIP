@@ -127,6 +127,7 @@ void    CCube::Draw(Shader& shader) {
     shader.setInt("material.texture_specular_count", 1);
     shader.setInt("material.texture_specular[0]", 2);
     glBindTexture(GL_TEXTURE_2D, _texId[2]);
+    shader.setInt("material.texture_normal_count", 0);
     shader.setFloat("material.shininess", 0.6f * 32.0f);
 
     glBindVertexArray(_vao);

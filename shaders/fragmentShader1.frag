@@ -204,10 +204,11 @@ void main()
 {
     // properties
     vec3 norm = fs_in.Normal;
-//    if (material.texture_normal_count > 0) {
-//        norm = vec3(texture(material.texture_normal[0], fs_in.TexCoords));
-//        norm = normalize(norm * 2 - 1);
-//    }
+    if (material.texture_normal_count > 0) {
+        //apply texture normal normalized to normal matrix
+        norm *= vec3(texture(material.texture_normal[0], fs_in.TexCoords)) * 2 - 1;
+        norm = normalize(norm);
+    }
 
     //vec3 viewDir = normalize(fs_in.TangentViewPos - fs_in.TangentFragPos);
     vec3 viewDir = normalize(viewPos - fs_in.FragPos);
