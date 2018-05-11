@@ -10,7 +10,7 @@ class IObject
     public:
         virtual                 ~IObject() = default;
 
-        virtual int             Draw(Shader&) = 0;
+        virtual int             Draw(Shader&, glm::vec3) = 0;
         virtual glm::vec3       GetPos() = 0;
         virtual void            SetPos(glm::vec3) = 0;
 

@@ -26,7 +26,7 @@ CObject::~CObject()
     //dtor
 }
 
-int CObject::Draw(Shader& shader) {
+int CObject::Draw(Shader& shader, glm::vec3 scale) {
     //_model.UseShaderProgram();
     shader.use();
     glm::mat4 model = glm::mat4(1.0f);
@@ -34,6 +34,7 @@ int CObject::Draw(Shader& shader) {
     if (_turning)
         model = glm::rotate(model, (float)glfwGetTime() * glm::radians(50.0f), glm::vec3(0.0, 1.0, 0.0));
     model = glm::scale(model, _scale);
+    model = glm::scale(model, scale);
 
     glm::mat4 view = _game.GetCamera().GetViewMatrix();
     glm::mat4 projection = _game.GetCamera().GetProjMatrix();

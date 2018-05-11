@@ -732,7 +732,7 @@
 	<inttypes.h>
 	<stdint.h>
 
-1525972464 source:g:\code\bidouille\wip\ccube.cpp
+1525995496 source:g:\code\bidouille\wip\ccube.cpp
 	"CCube.h"
 	"render.h"
 	<iostream>
@@ -745,7 +745,7 @@
 1525638892 g:\code\bidouille\wip\includes\render.h
 	<GL/gl.h>
 
-1525982445 source:g:\code\bidouille\wip\cgame.cpp
+1525992074 source:g:\code\bidouille\wip\cgame.cpp
 	"CGame.h"
 	"CPerspectiveCamera.h"
 	"CObject.h"
@@ -784,7 +784,7 @@
 	<GL/glext.h>
 	<GL/glu.h>
 
-1525876468 g:\code\bidouille\wip\includes\iobject.h
+1525987754 g:\code\bidouille\wip\includes\iobject.h
 	<glm/glm.hpp>
 	<shader.hpp>
 
@@ -1243,7 +1243,7 @@
 1525880056 g:\code\bidouille\wip\includes\cperspectivecamera.h
 	"ICamera.h"
 
-1525884072 g:\code\bidouille\wip\includes\cobject.h
+1525987760 g:\code\bidouille\wip\includes\cobject.h
 	<glad\glad.h>
 	"CPerspectiveCamera.h"
 	"IObject.h"
@@ -1290,14 +1290,14 @@
 	"CInputHandler.h"
 	"CGame.h"
 
-1525879486 source:g:\code\bidouille\wip\clight.cpp
+1525995578 source:g:\code\bidouille\wip\clight.cpp
 	"CLight.h"
 	"render.h"
 	<iostream>
 	<fstream>
 	<sstream>
 
-1525982495 source:g:\code\bidouille\wip\cobject.cpp
+1525987799 source:g:\code\bidouille\wip\cobject.cpp
 	"CObject.h"
 	<iostream>
 	<fstream>
@@ -1404,7 +1404,7 @@
 1525826300 source:g:\code\bidouille\wip\main.cpp
 	"CGame.h"
 
-1525970564 source:g:\code\bidouille\wip\render.cpp
+1525990919 source:g:\code\bidouille\wip\render.cpp
 	<iostream>
 	<fstream>
 	<math.h>

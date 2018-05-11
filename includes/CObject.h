@@ -15,7 +15,7 @@ class CObject : public IObject
         CObject(CGame&, IModel&, glm::vec3, glm::vec3 = glm::vec3(1.0f), bool = false, bool = false);
         virtual ~CObject();
 
-        virtual int             Draw(Shader&);
+        virtual int             Draw(Shader&, glm::vec3);
 
         virtual glm::vec3       GetPos() { return _pos; }
         virtual void            SetPos(glm::vec3 pos) { _pos = pos; }

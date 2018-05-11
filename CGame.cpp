@@ -56,6 +56,13 @@ int CGame::setup() {
     ilutEnable(ILUT_OPENGL_CONV);
 
     glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_LESS);
+    glEnable(GL_STENCIL_TEST);
+    glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
+    glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
+    glEnable(GL_CULL_FACE);
+    glCullFace(GL_FRONT);
+    glFrontFace(GL_CW);
 
     // RETRIEVE INFO
     int nrAttributes;
@@ -66,8 +73,12 @@ int CGame::setup() {
 }
 
 void CGame::loop() {
-    Shader shaderObj("G:/code/bidouille/WIP/shaders/vertexShader1.shader", "G:/code/bidouille/WIP/shaders/fragmentShader1.shader");
-    Shader shaderLight("G:/code/bidouille/WIP/shaders/vertexShaderLight1.shader", "G:/code/bidouille/WIP/shaders/fragmentShaderLight1.shader");
+    Shader shaderObj("G:/code/bidouille/WIP/shaders/vertexShader1.vert", "G:/code/bidouille/WIP/shaders/fragmentShader1.frag");
+    Shader shaderLight("G:/code/bidouille/WIP/shaders/vertexShaderLight1.vert", "G:/code/bidouille/WIP/shaders/fragmentShaderLight1.frag");
+    Shader shaderStencil("G:/code/bidouille/WIP/shaders/vertexShaderLight1.vert", "G:/code/bidouille/WIP/shaders/SingleColorFragment.frag");
+
+    shaderStencil.use();
+    shaderStencil.setVec3("color", 1.0f, 0.8125f, 0.0f);
 
     Model nanosuit("G:/code/bidouille/WIP/ressources/models/nanosuit/nanosuit.obj");
     //Model nanosuit("G:/code/bidouille/WIP/ressources/models/anvil.blend");
@@ -122,20 +133,36 @@ void CGame::loop() {
 
         _input.processInput(deltaTime);
 
+        //_lightList[0]->SetPos(glm::vec3((float)sin(currentFrame)*10, 5.0f, (float)cos(currentFrame)*10));
+        _lightList[0]->SetPos(glm::vec3((float)sin(currentFrame)*10, 5.0f, 5.0f));
+
         //glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
         glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
         //glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         //glClearColor(0.01f, 0.01f, 0.01f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+
+        glStencilMask(0x00);
 
         for (auto obj : _lightList)
-            obj->Draw(shaderLight);
+            obj->Draw(shaderLight, glm::vec3(1.0f));
+
+        glStencilFunc(GL_ALWAYS, 1, 0xFF);
+        glStencilMask(0xFF);
 
         for (auto obj : _objList)
-            obj->Draw(shaderObj);
+            obj->Draw(shaderObj, glm::vec3(1.0f));
 
-        //_lightList[0]->SetPos(glm::vec3((float)sin(currentFrame)*10, 5.0f, (float)cos(currentFrame)*10));
-        _lightList[0]->SetPos(glm::vec3((float)sin(currentFrame)*10, 5.0f, 5.0f));
+        glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
+        glStencilMask(0x00);
+        glDisable(GL_DEPTH_TEST);
+
+        for (auto obj : _objList)
+            obj->Draw(shaderStencil, glm::vec3(1.1f));
+
+        glStencilMask(0xFF);
+        glEnable(GL_DEPTH_TEST);
+
 
         glfwSwapBuffers(_window);
         //glfwSetWindowShouldClose(_window, true);
