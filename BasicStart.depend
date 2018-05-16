@@ -745,7 +745,7 @@
 1525638892 g:\code\bidouille\wip\includes\render.h
 	<GL/gl.h>
 
-1526001079 source:g:\code\bidouille\wip\cgame.cpp
+1526438131 source:g:\code\bidouille\wip\cgame.cpp
 	"CGame.h"
 	"CPerspectiveCamera.h"
 	"CObject.h"
@@ -753,6 +753,7 @@
 	"CLight.h"
 	<iostream>
 	"IL\ilut.h"
+	<glm/glm.hpp>
 	"model.hpp"
 
 1525651596 g:\code\bidouille\wip\includes\cgame.h
@@ -1243,8 +1244,10 @@
 1525880056 g:\code\bidouille\wip\includes\cperspectivecamera.h
 	"ICamera.h"
 
-1525987760 g:\code\bidouille\wip\includes\cobject.h
+1526434019 g:\code\bidouille\wip\includes\cobject.h
 	<glad\glad.h>
+	<glm/glm.hpp>
+	<glm/gtc/matrix_transform.hpp>
 	"CPerspectiveCamera.h"
 	"IObject.h"
 	"IModel.h"
@@ -1297,7 +1300,7 @@
 	<fstream>
 	<sstream>
 
-1525987799 source:g:\code\bidouille\wip\cobject.cpp
+1526434234 source:g:\code\bidouille\wip\cobject.cpp
 	"CObject.h"
 	<iostream>
 	<fstream>
@@ -1404,7 +1407,7 @@
 1525826300 source:g:\code\bidouille\wip\main.cpp
 	"CGame.h"
 
-1525990919 source:g:\code\bidouille\wip\render.cpp
+1526098452 source:g:\code\bidouille\wip\render.cpp
 	<iostream>
 	<fstream>
 	<math.h>
@@ -1414,7 +1417,7 @@
 	"IL\ilut.h"
 	"render.h"
 
-1525967076 g:\code\bidouille\wip\includes\model.hpp
+1526098780 g:\code\bidouille\wip\includes\model.hpp
 	<glad/glad.h>
 	<glm/glm.hpp>
 	<glm/gtc/matrix_transform.hpp>

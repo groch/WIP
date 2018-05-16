@@ -23,7 +23,6 @@ uniform mat4 model;
 uniform mat4 view;
 uniform mat4 projection;
 
-uniform vec3 lightPos;
 uniform vec3 viewPos;
 
 void main()
@@ -31,31 +30,29 @@ void main()
     vs_out.FragPos = vec3(model * vec4(aPos, 1.0));
     vs_out.TexCoords = aTexCoord;
 
-    mat3 nm = transpose(inverse(mat3(model)));
+    mat3 nm = mat3(transpose(inverse(mat3(model))));
     vec3 T = normalize(nm * aTangent);
-    vec3 B = normalize(nm * aBitangent);
     vec3 N = normalize(nm * aNormal);
+//    vec3 B = normalize(nm * aBitangent);
+
     vs_out.Normal = N;
+
+    T = normalize(T - dot(T, N) * N);
+    vec3 B = cross(T, N);
 
     // TBN must form a right handed coord system.
     // Some models have symetric UVs. Check and fix.
-    if (dot(cross(N, T), B) < 0.0)
-        T = T * -1.0;
-
-    T = normalize(T - dot(T, N) * N);
-    B = cross(N, T);
+//    if (dot(cross(N, T), B) < 0.0)
+//        T = T * -1.0;
 
     //vs_out.TBN = transpose(mat3(T, B, N));
-    vs_out.TBN = transpose(mat3(T, B, N));
+    vs_out.TBN = mat3(T, B, N);
 
-//    vs_out.TangentLightPos = TBN * lightPos;
     vs_out.TangentViewPos  = vs_out.TBN * viewPos;
     vs_out.TangentFragPos  = vs_out.TBN * vs_out.FragPos;
 
 
     //ourColor = aColor;
-//    TexCoords = aTexCoord;
-//    FragPos = vec3(model * vec4(aPos, 1.0));
 //    Normal = mat3(transpose(inverse(model))) * aNormal;
 
     gl_Position = projection * view * model * vec4(aPos, 1.0);

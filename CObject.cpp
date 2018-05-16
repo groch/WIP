@@ -16,7 +16,8 @@
 
 #include "CGame.h"
 
-CObject::CObject(CGame& game, IModel& model, glm::vec3 pos, glm::vec3 scale, bool turning, bool isLight) : _model(model), _turning(turning), _pos(pos), _scale(scale), _isLight(isLight), _game(game)
+CObject::CObject(CGame& game, IModel& model, glm::vec3 pos, glm::vec3 scale, bool turning, bool isLight) :
+    _model(model), _turning(turning), _pos(pos), _scale(scale), _angle(0.0f), _axe(glm::vec3(0.0f, 1.0f, 0.0f)), _isLight(isLight), _game(game)
 {
     //ctor
 }
@@ -33,7 +34,11 @@ int CObject::Draw(Shader& shader, glm::vec3 scale) {
     model = glm::translate(model, _pos);
     if (_turning)
         model = glm::rotate(model, (float)glfwGetTime() * glm::radians(50.0f), glm::vec3(0.0, 1.0, 0.0));
+    if (_angle > 0.0f || _angle < 0.0f)
+        model = glm::rotate(model, _angle, _axe);
     model = glm::scale(model, _scale);
+
+    //ugly roundqbout for the moment
     model = glm::scale(model, scale);
 
     glm::mat4 view = _game.GetCamera().GetViewMatrix();
@@ -69,7 +74,7 @@ int CObject::Draw(Shader& shader, glm::vec3 scale) {
         shader.setVec3("dirLight.ambient", 0.01f, 0.01f, 0.01f);
         shader.setVec3("dirLight.diffuse", 0.8f, 0.8f, 0.8f);
         shader.setVec3("dirLight.specular", 1.0f, 1.0f, 1.0f);
-        shader.setVec3("dirLight.direction", (float)sin(glfwGetTime()*0.5), 0.0f, -1.0f);
+        shader.setVec3("dirLight.direction", (float)sin(glfwGetTime()*0.5), -0.2f, -1.0f);
         //shader.setVec3("dirLight.direction", 0.0f, 0.0f, 1.0f);
 
 
@@ -79,6 +84,9 @@ int CObject::Draw(Shader& shader, glm::vec3 scale) {
         shader.setVec3("pointLights[0].diffuse",  0.5f, 0.5f, 0.5f); // darken the light a bit to fit the scene
         shader.setVec3("pointLights[0].specular", 1.0f, 1.0f, 1.0f);
         shader.setVec3("pointLights[0].position", _game.GetLightList()[0]->GetPos());
+        std::cout << "lightPos=x=" << _game.GetLightList()[0]->GetPos().x <<
+                                "y=" << _game.GetLightList()[0]->GetPos().y <<
+                                "z=" << _game.GetLightList()[0]->GetPos().z << std::endl;
 
         //distance
         shader.setFloat("pointLights[0].constant",  1.0f);
@@ -96,6 +104,10 @@ int CObject::Draw(Shader& shader, glm::vec3 scale) {
         shader.setVec3("spotLight.specular", 1.0f, 1.0f, 1.0f);
 
         shader.setVec3("spotLight.position", _game.GetCamera().GetPos());
+        std::cout << "spotPos=x=" << _game.GetCamera().GetPos().x <<
+                                "y=" << _game.GetCamera().GetPos().y <<
+                                "z=" << _game.GetCamera().GetPos().z << std::endl;
+
         shader.setVec3("spotLight.direction", _game.GetCamera().GetFront());
         shader.setFloat("spotLight.cutOff",   glm::cos(glm::radians(7.5f)));
         shader.setFloat("spotLight.outerCutOff",   glm::cos(glm::radians(17.5f)));

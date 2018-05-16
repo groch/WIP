@@ -2,6 +2,8 @@
 #define COBJECT_H
 
 #include <glad\glad.h>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 #include "CPerspectiveCamera.h"
 #include "IObject.h"
@@ -19,6 +21,7 @@ class CObject : public IObject
 
         virtual glm::vec3       GetPos() { return _pos; }
         virtual void            SetPos(glm::vec3 pos) { _pos = pos; }
+        void                    ApplyRotation(float angle, glm::vec3 axe) { _axe = axe; _angle = angle; }
 
     protected:
 
@@ -28,6 +31,10 @@ class CObject : public IObject
 
         glm::vec3       _pos;
         glm::vec3       _scale;
+
+        float           _angle;
+        glm::vec3       _axe;
+
         bool            _isLight;
 
         CGame&          _game;

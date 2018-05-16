@@ -6,6 +6,7 @@
 
 #include <iostream>
 #include "IL\ilut.h"
+#include <glm/glm.hpp>
 
 #include "model.hpp"
 
@@ -94,6 +95,8 @@ void CGame::loop() {
     std::cout << "Churros Loaded" << std::endl;
 
     Model anvil("G:/code/bidouille/WIP/ressources/models/anvil/anvil.obj");
+    Model african_head("G:/code/bidouille/WIP/ressources/models/african_head/african_head.obj");
+    Model african_headT("G:/code/bidouille/WIP/ressources/models/african_head/african_headtangent.obj");
 
     IModel* cube = new CCube();
     IModel* light = new CLight();
@@ -104,7 +107,7 @@ void CGame::loop() {
     float lastFrame = 0.0f; // Time of last frame
 
     glm::vec3 cubePositions[] = {
-        glm::vec3( 0.0f,  0.0f,  -10.0f),
+        glm::vec3( 0.0f,  0.0f, -10.0f),
         glm::vec3( 2.0f,  5.0f, -15.0f),
         glm::vec3(-1.5f, -2.2f, -2.5f),
         glm::vec3(-3.8f, -2.0f, -12.3f),
@@ -120,9 +123,30 @@ void CGame::loop() {
     for (glm::vec3& vec : cubePositions)
         _objList.push_back(new CObject(*this, *cube, vec, glm::vec3(1.0f), (i++ % 3 == 0)));
 
-    CObject nanoObj(*this, nanosuit, glm::vec3(0.0f, -2.25f, 7.0f), glm::vec3(0.2f), false);
+    CObject nanoObj(*this, nanosuit, glm::vec3(0.0f, -2.25f, 7.0f), glm::vec3(0.2f));
     _objList.push_back(new CObject(*this, churros, glm::vec3(-5.0f, -1.75f, 0.0f), glm::vec3(0.2f)));
+
     CObject anvilObj(*this, anvil, glm::vec3(5.0f, -1.75f, 0.0f), glm::vec3(0.5f));
+
+    glm::vec3 headPositions[] = {
+        glm::vec3( 0.0f,  0.0f,  0.0f),
+        glm::vec3( 0.0f,  0.0f,  0.0f),
+        glm::vec3(-2.0f,  0.0f,  0.0f),
+        glm::vec3( 2.0f,  0.0f,  0.0f),
+        glm::vec3( 0.0f, -2.0f,  0.0f),
+        glm::vec3( 0.0f,  2.0f,  0.0f),
+        glm::vec3( 0.0f,  0.0f, -2.0f),
+        glm::vec3( 0.0f,  0.0f,  2.0f)
+    };
+
+
+    CObject head(*this, african_head, glm::vec3(0.0f, 0.0f, 5.0f), glm::vec3(0.5f));
+
+    std::vector<IObject*>   headTlist;
+    for (glm::vec3& vec : headPositions)
+        headTlist.push_back(new CObject(*this, african_headT, vec, glm::vec3(0.5f)));
+
+    //head.ApplyRotation(glm::radians(180.0f), glm::vec3(0.0, 1.0, 0.0));
 
     //glm::vec3 cam = glm::vec3(0.0f, 0.0f, -3.0f);
     glfwSetInputMode(_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
@@ -136,7 +160,7 @@ void CGame::loop() {
         _input.processInput(deltaTime);
 
         //_lightList[0]->SetPos(glm::vec3((float)sin(currentFrame)*10, 5.0f, (float)cos(currentFrame)*10));
-        _lightList[0]->SetPos(glm::vec3((float)sin(currentFrame)*10, 5.0f, 5.0f));
+        _lightList[0]->SetPos(glm::vec3((float)sin(currentFrame)*10, 0.0f, 5.0f));
 
         //glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
         glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
@@ -155,11 +179,16 @@ void CGame::loop() {
         for (auto obj : _objList)
             obj->Draw(shaderObj, glm::vec3(1.0f));
 
+        head.Draw(shaderObj, glm::vec3(1.0f));
+        for (auto obj : headTlist)
+            obj->Draw(shaderObjTBN, glm::vec3(1.0f));
+
+
         anvilObj.Draw(shaderObjTBN, glm::vec3(1.0f));
         nanoObj.Draw(shaderObj, glm::vec3(1.0f));
 
-        anvilObj.Draw(shaderGeoNorm, glm::vec3(1.0f));
-        nanoObj.Draw(shaderGeoNorm, glm::vec3(1.0f));
+        //anvilObj.Draw(shaderGeoNorm, glm::vec3(1.0f));
+        //nanoObj.Draw(shaderGeoNorm, glm::vec3(1.0f));
 
 //        glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
 //        glStencilMask(0x00);

@@ -48,7 +48,6 @@
 			<Add library="glfw3dll" />
 			<Add library="lib/assimp.a" />
 		</Linker>
-		<Unit filename="AModel.cpp" />
 		<Unit filename="CCube.cpp" />
 		<Unit filename="CGame.cpp" />
 		<Unit filename="CInputHandler.cpp" />
@@ -58,7 +57,6 @@
 		<Unit filename="glad.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="includes/AModel.h" />
 		<Unit filename="includes/CCube.h" />
 		<Unit filename="includes/CGame.h" />
 		<Unit filename="includes/CInputHandler.h" />
@@ -67,6 +65,7 @@
 		<Unit filename="includes/CPerspectiveCamera.h" />
 		<Unit filename="includes/GLFW/glfw3.h" />
 		<Unit filename="includes/ICamera.h" />
+		<Unit filename="includes/IModel.h" />
 		<Unit filename="includes/IObject.h" />
 		<Unit filename="includes/glad/glad.h" />
 		<Unit filename="includes/mesh.hpp" />
@@ -75,10 +74,14 @@
 		<Unit filename="includes/shader.hpp" />
 		<Unit filename="main.cpp" />
 		<Unit filename="render.cpp" />
-		<Unit filename="shaders/fragmentShader1.shader" />
-		<Unit filename="shaders/fragmentShaderLight1.shader" />
-		<Unit filename="shaders/vertexShader1.shader" />
-		<Unit filename="shaders/vertexShaderLight1.shader" />
+		<Unit filename="shaders/SingleColorFragment.frag" />
+		<Unit filename="shaders/fragmentShader1.frag" />
+		<Unit filename="shaders/fragmentShaderLight1.frag" />
+		<Unit filename="shaders/fragmentShaderTBN1.frag" />
+		<Unit filename="shaders/geoNorm.geom" />
+		<Unit filename="shaders/vertexShader1.vert" />
+		<Unit filename="shaders/vertexShaderGeoNorm1.vert" />
+		<Unit filename="shaders/vertexShaderLight1.vert" />
 		<Extensions>
 			<code_completion />
 			<envvars />
