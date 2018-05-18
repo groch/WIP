@@ -3,6 +3,7 @@
 #include "CObject.h"
 #include "CCube.h"
 #include "CLight.h"
+#include "CPlane.h"
 
 #include <iostream>
 #include "IL\ilut.h"
@@ -76,6 +77,7 @@ int CGame::setup() {
 void CGame::loop() {
     Shader shaderObj("G:/code/bidouille/WIP/shaders/vertexShader1.vert", "G:/code/bidouille/WIP/shaders/fragmentShader1.frag");
     Shader shaderObjTBN("G:/code/bidouille/WIP/shaders/vertexShader1.vert", "G:/code/bidouille/WIP/shaders/fragmentShaderTBN1.frag");
+    Shader shaderObjTBN2("G:/code/bidouille/WIP/shaders/vertexShader1.vert", "G:/code/bidouille/WIP/shaders/fragmentShaderTBN2.frag");
     Shader shaderLight("G:/code/bidouille/WIP/shaders/vertexShaderLight1.vert", "G:/code/bidouille/WIP/shaders/fragmentShaderLight1.frag");
     Shader shaderStencil("G:/code/bidouille/WIP/shaders/vertexShaderLight1.vert", "G:/code/bidouille/WIP/shaders/SingleColorFragment.frag");
     Shader shaderGeoNorm("G:/code/bidouille/WIP/shaders/vertexShaderGeoNorm1.vert", "G:/code/bidouille/WIP/shaders/SingleColorFragment.frag", "G:/code/bidouille/WIP/shaders/geoNorm.geom");
@@ -97,6 +99,12 @@ void CGame::loop() {
     Model anvil("G:/code/bidouille/WIP/ressources/models/anvil/anvil.obj");
     Model african_head("G:/code/bidouille/WIP/ressources/models/african_head/african_head.obj");
     Model african_headT("G:/code/bidouille/WIP/ressources/models/african_head/african_headtangent.obj");
+
+    std::cout << "Start Loading Car" << std::endl;
+
+    Model car("G:/code/bidouille/WIP/ressources/models/car/Avent.obj");
+
+    std::cout << "Car Loaded" << std::endl;
 
     IModel* cube = new CCube();
     IModel* light = new CLight();
@@ -123,10 +131,20 @@ void CGame::loop() {
     for (glm::vec3& vec : cubePositions)
         _objList.push_back(new CObject(*this, *cube, vec, glm::vec3(1.0f), (i++ % 3 == 0)));
 
+    IModel* plane = new CPlane();
+
+    CObject planeObj(*this, *plane, glm::vec3( 0.0f, -10.0f,  0.0f), glm::vec3(10.0f));
+    planeObj.ApplyRotation(glm::radians(-90.0f), glm::vec3(1.0, 0.0, 0.0));
+
     CObject nanoObj(*this, nanosuit, glm::vec3(0.0f, -2.25f, 7.0f), glm::vec3(0.2f));
+    nanoObj.ApplyRotation(glm::radians(90.0f), glm::vec3(0.0, 1.0, 0.0));
+
+    CObject nanoObj2(*this, nanosuit, glm::vec3(-5.0f, -2.25f, 7.0f), glm::vec3(0.2f));
+
     _objList.push_back(new CObject(*this, churros, glm::vec3(-5.0f, -1.75f, 0.0f), glm::vec3(0.2f)));
 
     CObject anvilObj(*this, anvil, glm::vec3(5.0f, -1.75f, 0.0f), glm::vec3(0.5f));
+    CObject carObj(*this, car, glm::vec3(10.0f, 0.0f, 0.0f), glm::vec3(0.5f));
 
     glm::vec3 headPositions[] = {
         glm::vec3( 0.0f,  0.0f,  0.0f),
@@ -146,7 +164,7 @@ void CGame::loop() {
     for (glm::vec3& vec : headPositions)
         headTlist.push_back(new CObject(*this, african_headT, vec, glm::vec3(0.5f)));
 
-    //head.ApplyRotation(glm::radians(180.0f), glm::vec3(0.0, 1.0, 0.0));
+    //head.ApplyRotation(glm::radians(90.0f), glm::vec3(0.0, 1.0, 0.0));
 
     //glm::vec3 cam = glm::vec3(0.0f, 0.0f, -3.0f);
     glfwSetInputMode(_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
@@ -179,13 +197,19 @@ void CGame::loop() {
         for (auto obj : _objList)
             obj->Draw(shaderObj, glm::vec3(1.0f));
 
-        head.Draw(shaderObj, glm::vec3(1.0f));
+//        head.Draw(shaderObj, glm::vec3(1.0f));
+//        head.Draw(shaderGeoNorm, glm::vec3(1.0f));
+
         for (auto obj : headTlist)
             obj->Draw(shaderObjTBN, glm::vec3(1.0f));
 
 
         anvilObj.Draw(shaderObjTBN, glm::vec3(1.0f));
         nanoObj.Draw(shaderObj, glm::vec3(1.0f));
+        nanoObj2.Draw(shaderObjTBN, glm::vec3(1.0f));
+
+        carObj.Draw(shaderObj, glm::vec3(1.0f));
+        planeObj.Draw(shaderObjTBN, glm::vec3(1.0f));
 
         //anvilObj.Draw(shaderGeoNorm, glm::vec3(1.0f));
         //nanoObj.Draw(shaderGeoNorm, glm::vec3(1.0f));

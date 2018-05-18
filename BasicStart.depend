@@ -732,7 +732,7 @@
 	<inttypes.h>
 	<stdint.h>
 
-1526001442 source:g:\code\bidouille\wip\ccube.cpp
+1526491013 source:g:\code\bidouille\wip\ccube.cpp
 	"CCube.h"
 	"render.h"
 	<iostream>
@@ -745,12 +745,13 @@
 1525638892 g:\code\bidouille\wip\includes\render.h
 	<GL/gl.h>
 
-1526438131 source:g:\code\bidouille\wip\cgame.cpp
+1526661034 source:g:\code\bidouille\wip\cgame.cpp
 	"CGame.h"
 	"CPerspectiveCamera.h"
 	"CObject.h"
 	"CCube.h"
 	"CLight.h"
+	"CPlane.h"
 	<iostream>
 	"IL\ilut.h"
 	<glm/glm.hpp>
@@ -1300,7 +1301,7 @@
 	<fstream>
 	<sstream>
 
-1526434234 source:g:\code\bidouille\wip\cobject.cpp
+1526447951 source:g:\code\bidouille\wip\cobject.cpp
 	"CObject.h"
 	<iostream>
 	<fstream>
@@ -1417,7 +1418,7 @@
 	"IL\ilut.h"
 	"render.h"
 
-1526098780 g:\code\bidouille\wip\includes\model.hpp
+1526492233 g:\code\bidouille\wip\includes\model.hpp
 	<glad/glad.h>
 	<glm/glm.hpp>
 	<glm/gtc/matrix_transform.hpp>
@@ -1600,4 +1601,14 @@
 
 1525877030 g:\code\bidouille\wip\includes\imodel.h
 	<shader.hpp>
+
+1526490842 g:\code\bidouille\wip\includes\cplane.h
+	<IModel.h>
+
+1526491950 source:g:\code\bidouille\wip\cplane.cpp
+	"CPlane.h"
+	"render.h"
+	<iostream>
+	<fstream>
+	<sstream>
 

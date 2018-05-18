@@ -30,20 +30,20 @@ void main()
     vs_out.FragPos = vec3(model * vec4(aPos, 1.0));
     vs_out.TexCoords = aTexCoord;
 
-    mat3 nm = mat3(transpose(inverse(mat3(model))));
+    mat3 nm = transpose(inverse(mat3(model)));
+    vs_out.Normal = nm * aNormal;
     vec3 T = normalize(nm * aTangent);
-    vec3 N = normalize(nm * aNormal);
+    vec3 N = normalize(vs_out.Normal);
+    //vec3 N = normalize(nm * aNormal);
 //    vec3 B = normalize(nm * aBitangent);
-
-    vs_out.Normal = N;
 
     T = normalize(T - dot(T, N) * N);
     vec3 B = cross(T, N);
 
     // TBN must form a right handed coord system.
     // Some models have symetric UVs. Check and fix.
-//    if (dot(cross(N, T), B) < 0.0)
-//        T = T * -1.0;
+    if (dot(cross(N, T), B) < 0.0)
+        T = T * -1.0;
 
     //vs_out.TBN = transpose(mat3(T, B, N));
     vs_out.TBN = mat3(T, B, N);

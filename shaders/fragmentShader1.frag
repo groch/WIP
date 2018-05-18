@@ -144,25 +144,19 @@ vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
     vec3 ambient  = light.ambient  * GetAmbientColor();
     vec3 diffuse  = light.diffuse  * diff * GetDiffuseColor();
     vec3 specular = light.specular * spec * GetSpecularColor();
-    ambient  *= attenuation;
-    diffuse  *= attenuation;
-    specular *= attenuation;
-    return (ambient + diffuse + specular);
+    return ((ambient + diffuse + specular) * attenuation);
 }
 
 vec3 CalcSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir) {
     vec3 lightDir = normalize(light.position - fragPos);
-//    vec3 lightDir = normalize(light.position * fs_in.TBN - fragPos);
 
     float theta = dot(lightDir, normalize(-light.direction));
-//    float theta = dot(lightDir, normalize(-light.direction * fs_in.TBN));
     float epsilon   = light.cutOff - light.outerCutOff;
     float intensity = clamp((theta - light.outerCutOff) / epsilon, 0.0, 1.0);
 
     vec3 ambient  = light.ambient  * GetAmbientColor();
 
     float distance    = length(light.position - fragPos);
-//    float distance    = length(light.position * fs_in.TBN - fragPos);
     float attenuation = 1.0 / (light.constant + light.linear * distance +
   			     light.quadratic * (distance * distance));
 
@@ -170,8 +164,8 @@ vec3 CalcSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir) {
 
     if(theta > light.outerCutOff)
     {
-        //float diff = max(dot(normal, lightDir), 0.0);
-        float diff = max(dot(lightDir, normal), 0.0);
+        float diff = max(dot(normal, lightDir), 0.0);
+        //float diff = max(dot(lightDir, normal), 0.0);
         vec3 diffuse  = light.diffuse  * diff * GetDiffuseColor();
 
         vec3 reflectDir = reflect(-lightDir, normal);
@@ -203,10 +197,10 @@ float LinearizeDepth(float depth)
 void main()
 {
     // properties
-    vec3 norm = fs_in.Normal;
+    vec3 norm = normalize(fs_in.Normal);
     if (material.texture_normal_count > 0) {
         //apply texture normal normalized to normal matrix
-        norm *= vec3(texture(material.texture_normal[0], fs_in.TexCoords)) * 2 - 1;
+        norm *= ((texture(material.texture_normal[0], fs_in.TexCoords).rgb * 255.0/128.0) - 1.0);
         //norm = texture(material.texture_normal[0], fs_in.TexCoords).rgb * 2 - 1;
         norm = normalize(norm);
     }
@@ -220,15 +214,19 @@ void main()
     // phase 1: Directional lighting
     result = CalcDirLight(dirLight, norm, viewDir);
     // phase 2: Point lights
-    for(int i = 0; i < nbPointLight; i++)
-        result += CalcPointLight(pointLights[i], norm, fs_in.FragPos, viewDir);
-//        result += CalcPointLight(pointLights[i], norm, fs_in.TangentFragPos, viewDir);
+//    for(int i = 0; i < nbPointLight; i++)
+//        result += CalcPointLight(pointLights[i], norm, fs_in.FragPos, viewDir);
     // phase 3: Spot light
     result += CalcSpotLight(spotLight, norm, fs_in.FragPos, viewDir);
 //    result += CalcSpotLight(spotLight, norm, fs_in.TangentFragPos, viewDir);
     result += emission;
 
-    FragColor = vec4(result, 1.0);
+//    if (material.texture_normal_count > 0)
+//        FragColor = vec4(norm, 1.0);
+//    else
+        FragColor = vec4(result, 1.0);
+
+//    FragColor = vec4(result, 1.0);
 
     //depth testing
     //float depth = LinearizeDepth(gl_FragCoord.z) / far; // divide by far for demonstration

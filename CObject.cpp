@@ -84,9 +84,9 @@ int CObject::Draw(Shader& shader, glm::vec3 scale) {
         shader.setVec3("pointLights[0].diffuse",  0.5f, 0.5f, 0.5f); // darken the light a bit to fit the scene
         shader.setVec3("pointLights[0].specular", 1.0f, 1.0f, 1.0f);
         shader.setVec3("pointLights[0].position", _game.GetLightList()[0]->GetPos());
-        std::cout << "lightPos=x=" << _game.GetLightList()[0]->GetPos().x <<
-                                "y=" << _game.GetLightList()[0]->GetPos().y <<
-                                "z=" << _game.GetLightList()[0]->GetPos().z << std::endl;
+//        std::cout << "lightPos=x=" << _game.GetLightList()[0]->GetPos().x <<
+//                                "y=" << _game.GetLightList()[0]->GetPos().y <<
+//                                "z=" << _game.GetLightList()[0]->GetPos().z << std::endl;
 
         //distance
         shader.setFloat("pointLights[0].constant",  1.0f);
@@ -100,13 +100,13 @@ int CObject::Draw(Shader& shader, glm::vec3 scale) {
 
         //light type
         shader.setVec3("spotLight.ambient",  0.01f, 0.01f, 0.01f);
-        shader.setVec3("spotLight.diffuse",  1.0f, 1.0f, 1.0f); // darken the light a bit to fit the scene
+        shader.setVec3("spotLight.diffuse",  1.0f, 1.0f, 1.0f);
         shader.setVec3("spotLight.specular", 1.0f, 1.0f, 1.0f);
 
         shader.setVec3("spotLight.position", _game.GetCamera().GetPos());
-        std::cout << "spotPos=x=" << _game.GetCamera().GetPos().x <<
-                                "y=" << _game.GetCamera().GetPos().y <<
-                                "z=" << _game.GetCamera().GetPos().z << std::endl;
+//        std::cout << "spotPos=x=" << _game.GetCamera().GetPos().x <<
+//                                "y=" << _game.GetCamera().GetPos().y <<
+//                                "z=" << _game.GetCamera().GetPos().z << std::endl;
 
         shader.setVec3("spotLight.direction", _game.GetCamera().GetFront());
         shader.setFloat("spotLight.cutOff",   glm::cos(glm::radians(7.5f)));

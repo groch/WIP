@@ -65,14 +65,14 @@ uniform int nbPointLight;
 uniform PointLight pointLights[NR_POINT_LIGHTS];
 
 struct SpotLight {
+    vec3 ambient;
+    vec3 diffuse;
+    vec3 specular;
+
     vec3 position;
     vec3 direction;
     float cutOff;
     float outerCutOff;
-
-    vec3 ambient;
-    vec3 diffuse;
-    vec3 specular;
 
     float constant;
     float linear;
@@ -105,8 +105,8 @@ vec3 GetEmissionColor() {
 }
 
 vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir) {
-//    vec3 lightDir = normalize(-light.direction * fs_in.TBN);
-    vec3 lightDir = normalize(-light.direction);
+    vec3 lightDir = normalize(-light.direction * fs_in.TBN);
+//    vec3 lightDir = normalize(-light.direction);
     // diffuse shading
     //float diff = max(dot(normal, lightDir), 0.0);
     float diff = max(dot(lightDir, normal), 0.0);
@@ -124,7 +124,14 @@ vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir) {
 
 vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
 {
-    vec3 lightDir = normalize(light.position - fragPos);
+    vec3 lightDir = normalize(light.position * fs_in.TBN - fragPos);
+    //vec3 lightDir = normalize(light.position - fragPos);
+
+    // attenuation
+    float distance    = length(light.position * fs_in.TBN - fragPos);
+    float attenuation = 1.0 / (light.constant + light.linear * distance +
+  			     light.quadratic * (distance * distance));
+
     // diffuse shading
     //float diff = max(dot(normal, lightDir), 0.0);
     float diff = max(dot(lightDir, normal), 0.0);
@@ -135,11 +142,6 @@ vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
 //    vec3 halfwayDir = normalize(lightDir + viewDir);
 //    float spec = pow(max(dot(normal, halfwayDir), 0.0), material.shininess);
 
-
-    // attenuation
-    float distance    = length(light.position - fragPos);
-    float attenuation = 1.0 / (light.constant + light.linear * distance +
-  			     light.quadratic * (distance * distance));
     // combine results
     vec3 ambient  = light.ambient  * GetAmbientColor();
     vec3 diffuse  = light.diffuse  * diff * GetDiffuseColor();
@@ -148,24 +150,27 @@ vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
 }
 
 vec3 CalcSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir) {
-    vec3 lightDir = normalize(light.position - fragPos);
+    //vec3 lightDir = normalize(light.position - fragPos);
 
-    float theta = dot(lightDir, normalize(-light.direction));
-    float epsilon   = light.cutOff - light.outerCutOff;
-    float intensity = clamp((theta - light.outerCutOff) / epsilon, 0.0, 1.0);
+    //vec3 lightDir = normalize(vec3(mat4(fs_in.TBN) * vec4(light.position, 1.0)) - fragPos);
+    vec3 lightDir = normalize(light.position * fs_in.TBN - fragPos);
+
+    //float theta = dot(lightDir, normalize(-light.direction));
+//    float theta = dot(lightDir, normalize(-light.direction * fs_in.TBN));
+//    float epsilon   = light.cutOff - light.outerCutOff;
+//    float intensity = clamp((theta - light.outerCutOff) / epsilon, 0.0, 1.0);
 
     vec3 ambient  = light.ambient  * GetAmbientColor();
 
-    float distance    = length(light.position - fragPos);
+    //float distance    = length(light.position - fs_in.FragPos);
+    float distance    = length(light.position * fs_in.TBN - fragPos);
     float attenuation = 1.0 / (light.constant + light.linear * distance +
   			     light.quadratic * (distance * distance));
 
-    ambient  *= attenuation;
-
-    if(theta > light.outerCutOff)
-    {
-        float diff = max(dot(normal, lightDir), 0.0);
-        //float diff = max(dot(lightDir, normal), 0.0);
+//    if(theta > light.outerCutOff)
+//    {
+        //float diff = max(dot(normal, lightDir), 0.0);
+        float diff = max(dot(lightDir, normal), 0.0);
         vec3 diffuse  = light.diffuse  * diff * GetDiffuseColor();
 
         vec3 reflectDir = reflect(-lightDir, normal);
@@ -174,13 +179,10 @@ vec3 CalcSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir) {
         //float spec = pow(max(dot(normal, halfwayDir), 0.0), material.shininess);
         vec3 specular = light.specular * spec * GetSpecularColor();
 
-        diffuse  *= attenuation * intensity;
-        specular *= attenuation * intensity;
-
-        return (ambient + diffuse + specular);
-    }
-    else
-        return (ambient);
+        return ((ambient + diffuse + specular) * attenuation);// * intensity
+//    }
+//    else
+//        return (ambient * attenuation);
 }
 
 
@@ -197,36 +199,35 @@ float LinearizeDepth(float depth)
 void main()
 {
     // properties
-    vec3 norm = normalize(fs_in.Normal);
+    vec3 norm = fs_in.Normal;
     if (material.texture_normal_count > 0) {
         //apply texture normal normalized to normal matrix
-        norm = fs_in.TBN * ((texture(material.texture_normal[0], fs_in.TexCoords).rgb * 255.0/128.0) - 1.0);
-        //norm = texture(material.texture_normal[0], fs_in.TexCoords).rgb * 2 - 1;
-        norm = normalize(norm);
+        //norm *= vec3(texture(material.texture_normal[0], fs_in.TexCoords)) * 2 - 1;
+        norm = normalize(texture(material.texture_normal[0], fs_in.TexCoords).rgb * 255.0/128.0 - 1.0);
+        //norm = normalize(norm * fs_in.TBN);
     }
 
-//    vec3 viewDir = normalize(fs_in.TangentViewPos - fs_in.TangentFragPos);
-    vec3 viewDir = normalize(viewPos - fs_in.FragPos);
+    vec3 viewDir = normalize(fs_in.TangentViewPos - fs_in.TangentFragPos);
+    //vec3 viewDir = normalize(viewPos - fs_in.FragPos);
 
     vec3 emission = GetEmissionColor();
 
     vec3 result = vec3(0.0f);
     // phase 1: Directional lighting
-    result = CalcDirLight(dirLight, norm, viewDir);
+//    result = CalcDirLight(dirLight, norm, viewDir);
     // phase 2: Point lights
 //    for(int i = 0; i < nbPointLight; i++)
-//        result += CalcPointLight(pointLights[i], norm, fs_in.FragPos, viewDir);
+////        result += CalcPointLight(pointLights[i], norm, fs_in.FragPos, viewDir);
+//        result += CalcPointLight(pointLights[i], norm, fs_in.TangentFragPos, viewDir);
     // phase 3: Spot light
-    result += CalcSpotLight(spotLight, norm, fs_in.FragPos, viewDir);
-//    result += CalcSpotLight(spotLight, norm, fs_in.TangentFragPos, viewDir);
+    //result += CalcSpotLight(spotLight, norm, fs_in.FragPos, viewDir);
+    result += CalcSpotLight(spotLight, norm, fs_in.TangentFragPos, viewDir);
     result += emission;
 
-//    if (material.texture_normal_count > 0)
-//        FragColor = vec4(norm, 1.0);
-//    else
+    if (material.texture_normal_count > 0)
+        FragColor = vec4(norm, 1.0);
+    else
         FragColor = vec4(result, 1.0);
-
-//    FragColor = vec4(result, 1.0);
 
     //depth testing
     //float depth = LinearizeDepth(gl_FragCoord.z) / far; // divide by far for demonstration

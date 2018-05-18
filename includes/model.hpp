@@ -77,7 +77,7 @@ private:
     // processes a node in a recursive fashion. Processes each individual mesh located at the node and repeats this process on its children nodes (if any).
     void processNode(aiNode *node, const aiScene *scene)
     {
-        std::cout << "processNode" << std::endl;
+        //std::cout << "processNode" << std::endl;
         // process each mesh located at the current node
         for(unsigned int i = 0; i < node->mNumMeshes; i++)
         {
@@ -96,7 +96,7 @@ private:
 
     Mesh processMesh(aiMesh *mesh, const aiScene *scene)
     {
-        std::cout << "processMesh" << std::endl;
+        //std::cout << "processMesh" << std::endl;
         // data to fill
         vector<Vertex> vertices;
         vector<unsigned int> indices;

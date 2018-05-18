@@ -54,6 +54,7 @@
 		<Unit filename="CLight.cpp" />
 		<Unit filename="CObject.cpp" />
 		<Unit filename="CPerspectiveCamera.cpp" />
+		<Unit filename="CPlane.cpp" />
 		<Unit filename="glad.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -63,6 +64,7 @@
 		<Unit filename="includes/CLight.h" />
 		<Unit filename="includes/CObject.h" />
 		<Unit filename="includes/CPerspectiveCamera.h" />
+		<Unit filename="includes/CPlane.h" />
 		<Unit filename="includes/GLFW/glfw3.h" />
 		<Unit filename="includes/ICamera.h" />
 		<Unit filename="includes/IModel.h" />

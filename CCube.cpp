@@ -97,9 +97,9 @@ CCube::CCube() : _vao(), _vbo(), _ebo()
 //        glEnableVertexAttribArray(4);
 //        glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Bitangent));
 
-    _texId[0] = loadImage("ressources\\textures\\container2.png");
-    _texId[1] = loadImage("ressources\\textures\\matrix.jpg");
-    _texId[2] = loadImage("ressources\\textures\\container2_specular.png");
+    _texId[0] = loadImage("ressources/textures/container2.png");
+    _texId[1] = loadImage("ressources/textures/matrix.jpg");
+    _texId[2] = loadImage("ressources/textures/container2_specular.png");
 
 //    std::cout << "texId[0]=" << _texId[0] << std::endl;
 //    std::cout << "texId[1]=" << _texId[1] << std::endl;
