@@ -217,7 +217,7 @@ vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir)
     while(currentLayerDepth < currentDepthMapValue)
     {
         // shift texture coordinates along direction of P
-        currentTexCoords -= deltaTexCoords;
+        currentTexCoords += deltaTexCoords;
         // get depthmap value at current texture coordinates
         currentDepthMapValue = texture(material.texture_height[0], currentTexCoords).r;
         // get depth of next layer
@@ -225,7 +225,7 @@ vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir)
     }
 
     // get texture coordinates before collision (reverse operations)
-    vec2 prevTexCoords = currentTexCoords + deltaTexCoords;
+    vec2 prevTexCoords = currentTexCoords - deltaTexCoords;
 
     // get depth after and before collision for linear interpolation
     float afterDepth  = currentDepthMapValue - currentLayerDepth;

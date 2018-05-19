@@ -133,7 +133,7 @@ void CGame::loop() {
 
     IModel* plane = new CPlane();
 
-    CObject planeObj(*this, *plane, glm::vec3( 0.0f, -10.0f,  0.0f), glm::vec3(10.0f));
+    CObject planeObj(*this, *plane, glm::vec3( 0.0f, -11.0f,  0.0f), glm::vec3(10.0f));
     planeObj.ApplyRotation(glm::radians(-90.0f), glm::vec3(1.0, 0.0, 0.0));
 
     CObject nanoObj(*this, nanosuit, glm::vec3(0.0f, -2.25f, 7.0f), glm::vec3(0.2f));
@@ -247,4 +247,5 @@ void CGame::AddAlpha(float val)
         _alpha = 1.0f;
     if (_alpha <= 0.0f)
         _alpha = 0.0f;
+    std::cout << "Alpha=" << _alpha << std::endl;
 }
