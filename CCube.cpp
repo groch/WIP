@@ -115,6 +115,7 @@ CCube::~CCube() throw()
 
 void    CCube::Draw(Shader& shader) {
     shader.use();
+    shader.setInt("material.texture_height_count", 0);
     glActiveTexture(GL_TEXTURE0);
     shader.setInt("material.texture_diffuse_count", 1);
     shader.setInt("material.texture_diffuse[0]", 0);

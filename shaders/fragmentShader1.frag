@@ -214,8 +214,8 @@ void main()
     // phase 1: Directional lighting
     result = CalcDirLight(dirLight, norm, viewDir);
     // phase 2: Point lights
-//    for(int i = 0; i < nbPointLight; i++)
-//        result += CalcPointLight(pointLights[i], norm, fs_in.FragPos, viewDir);
+    for(int i = 0; i < nbPointLight; i++)
+        result += CalcPointLight(pointLights[i], norm, fs_in.FragPos, viewDir);
     // phase 3: Spot light
     result += CalcSpotLight(spotLight, norm, fs_in.FragPos, viewDir);
 //    result += CalcSpotLight(spotLight, norm, fs_in.TangentFragPos, viewDir);

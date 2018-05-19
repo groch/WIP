@@ -45,8 +45,8 @@ void main()
     if (dot(cross(N, T), B) < 0.0)
         T = T * -1.0;
 
-    //vs_out.TBN = transpose(mat3(T, B, N));
-    vs_out.TBN = mat3(T, B, N);
+    vs_out.TBN = transpose(mat3(T, B, N));
+    //vs_out.TBN = mat3(T, B, N);
 
     vs_out.TangentViewPos  = vs_out.TBN * viewPos;
     vs_out.TangentFragPos  = vs_out.TBN * vs_out.FragPos;

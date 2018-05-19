@@ -137,9 +137,9 @@ void CGame::loop() {
     planeObj.ApplyRotation(glm::radians(-90.0f), glm::vec3(1.0, 0.0, 0.0));
 
     CObject nanoObj(*this, nanosuit, glm::vec3(0.0f, -2.25f, 7.0f), glm::vec3(0.2f));
-    nanoObj.ApplyRotation(glm::radians(90.0f), glm::vec3(0.0, 1.0, 0.0));
+//    nanoObj.ApplyRotation(glm::radians(90.0f), glm::vec3(0.0, 1.0, 0.0));
 
-    CObject nanoObj2(*this, nanosuit, glm::vec3(-5.0f, -2.25f, 7.0f), glm::vec3(0.2f));
+    CObject nanoObj2(*this, nanosuit, glm::vec3(-3.0f, -2.25f, 7.0f), glm::vec3(0.2f));
 
     _objList.push_back(new CObject(*this, churros, glm::vec3(-5.0f, -1.75f, 0.0f), glm::vec3(0.2f)));
 
@@ -158,7 +158,8 @@ void CGame::loop() {
     };
 
 
-    CObject head(*this, african_head, glm::vec3(0.0f, 0.0f, 5.0f), glm::vec3(0.5f));
+    //CObject head(*this, african_head, glm::vec3(0.0f, 0.0f, 5.0f), glm::vec3(0.5f));
+    CObject head(*this, african_headT, glm::vec3(0.0f, 0.0f, 5.0f), glm::vec3(0.5f));
 
     std::vector<IObject*>   headTlist;
     for (glm::vec3& vec : headPositions)
@@ -197,7 +198,7 @@ void CGame::loop() {
         for (auto obj : _objList)
             obj->Draw(shaderObj, glm::vec3(1.0f));
 
-//        head.Draw(shaderObj, glm::vec3(1.0f));
+        head.Draw(shaderObjTBN2, glm::vec3(1.0f));
 //        head.Draw(shaderGeoNorm, glm::vec3(1.0f));
 
         for (auto obj : headTlist)
@@ -209,7 +210,7 @@ void CGame::loop() {
         nanoObj2.Draw(shaderObjTBN, glm::vec3(1.0f));
 
         carObj.Draw(shaderObj, glm::vec3(1.0f));
-        planeObj.Draw(shaderObjTBN, glm::vec3(1.0f));
+        planeObj.Draw(shaderObjTBN2, glm::vec3(1.0f));
 
         //anvilObj.Draw(shaderGeoNorm, glm::vec3(1.0f));
         //nanoObj.Draw(shaderGeoNorm, glm::vec3(1.0f));

@@ -126,6 +126,7 @@ int CObject::Draw(Shader& shader, glm::vec3 scale) {
 
     //std::cout << "alpha=" << alpha << std::endl;
     shader.setFloat("mixValue", _game.GetAlpha());
+    shader.setFloat("heightScale", _game.GetAlpha());
 
     _model.Draw(shader);
     return 1;

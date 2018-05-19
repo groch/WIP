@@ -80,6 +80,7 @@
 		<Unit filename="shaders/fragmentShader1.frag" />
 		<Unit filename="shaders/fragmentShaderLight1.frag" />
 		<Unit filename="shaders/fragmentShaderTBN1.frag" />
+		<Unit filename="shaders/fragmentShaderTBN2.frag" />
 		<Unit filename="shaders/geoNorm.geom" />
 		<Unit filename="shaders/vertexShader1.vert" />
 		<Unit filename="shaders/vertexShaderGeoNorm1.vert" />

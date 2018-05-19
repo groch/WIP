@@ -200,7 +200,7 @@ void main()
     vec3 norm = normalize(fs_in.Normal);
     if (material.texture_normal_count > 0) {
         //apply texture normal normalized to normal matrix
-        norm = fs_in.TBN * ((texture(material.texture_normal[0], fs_in.TexCoords).rgb * 255.0/128.0) - 1.0);
+        norm = transpose(fs_in.TBN) * ((texture(material.texture_normal[0], fs_in.TexCoords).rgb * 255.0/128.0) - 1.0);
         //norm = texture(material.texture_normal[0], fs_in.TexCoords).rgb * 2 - 1;
         norm = normalize(norm);
     }
@@ -214,8 +214,8 @@ void main()
     // phase 1: Directional lighting
     result = CalcDirLight(dirLight, norm, viewDir);
     // phase 2: Point lights
-//    for(int i = 0; i < nbPointLight; i++)
-//        result += CalcPointLight(pointLights[i], norm, fs_in.FragPos, viewDir);
+    for(int i = 0; i < nbPointLight; i++)
+        result += CalcPointLight(pointLights[i], norm, fs_in.FragPos, viewDir);
     // phase 3: Spot light
     result += CalcSpotLight(spotLight, norm, fs_in.FragPos, viewDir);
 //    result += CalcSpotLight(spotLight, norm, fs_in.TangentFragPos, viewDir);
