@@ -112,6 +112,7 @@ void CGame::loop() {
     _lightList.push_back(new CObject(*this, *light, glm::vec3(0.0f, 5.0f, 0.0f), glm::vec3(0.5f), false, true));
 
     float deltaTime = 0.0f;	// Time between current frame and last frame
+    float secCounter = 0.0f;
     float lastFrame = 0.0f; // Time of last frame
 
     glm::vec3 cubePositions[] = {
@@ -132,9 +133,13 @@ void CGame::loop() {
         _objList.push_back(new CObject(*this, *cube, vec, glm::vec3(1.0f), (i++ % 3 == 0)));
 
     IModel* plane = new CPlane();
+    IModel* plane2 = new CPlane(1);
 
     CObject planeObj(*this, *plane, glm::vec3( 0.0f, -11.0f,  0.0f), glm::vec3(10.0f));
     planeObj.ApplyRotation(glm::radians(-90.0f), glm::vec3(1.0, 0.0, 0.0));
+
+    CObject planeObj2(*this, *plane2, glm::vec3( 0.0f, -11.0f,  10.0f), glm::vec3(10.0f));
+    planeObj2.ApplyRotation(glm::radians(-90.0f), glm::vec3(1.0, 0.0, 0.0));
 
     CObject nanoObj(*this, nanosuit, glm::vec3(0.0f, -2.25f, 7.0f), glm::vec3(0.2f));
 //    nanoObj.ApplyRotation(glm::radians(90.0f), glm::vec3(0.0, 1.0, 0.0));
@@ -176,6 +181,12 @@ void CGame::loop() {
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
 
+        if (currentFrame - secCounter >= 1.0f) {
+            std::cout << "time to render this frame=" << deltaTime << "ms (~" << (1/deltaTime) << "FPS)" << std::endl;
+            secCounter = currentFrame;
+        }
+
+
         _input.processInput(deltaTime);
 
         //_lightList[0]->SetPos(glm::vec3((float)sin(currentFrame)*10, 5.0f, (float)cos(currentFrame)*10));
@@ -211,6 +222,7 @@ void CGame::loop() {
 
         carObj.Draw(shaderObj, glm::vec3(1.0f));
         planeObj.Draw(shaderObjTBN2, glm::vec3(1.0f));
+        planeObj2.Draw(shaderObjTBN2, glm::vec3(1.0f));
 
         //anvilObj.Draw(shaderGeoNorm, glm::vec3(1.0f));
         //nanoObj.Draw(shaderGeoNorm, glm::vec3(1.0f));

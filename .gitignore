@@ -2,3 +2,6 @@
 *.dll
 *.a
 *.lib
+*.zip
+ressources/models/*
+

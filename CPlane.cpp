@@ -5,7 +5,7 @@
 #include <fstream>
 #include <sstream>
 
-CPlane::CPlane() : _vao(), _vbo(), _ebo()
+CPlane::CPlane(unsigned int planeId) : _vao(), _vbo(), _ebo()
 {
     //ctor
         //ctor
@@ -60,16 +60,22 @@ CPlane::CPlane() : _vao(), _vbo(), _ebo()
 //        glEnableVertexAttribArray(4);
 //        glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Bitangent));
 
-//    _texId[0] = loadImage("ressources/textures/196.jpg");
-//    _texId[1] = loadImage("ressources/textures/196_norm.jpg");
-
-    _texId[0] = loadImage("ressources/textures/bricks2.jpg");
-    _texId[1] = loadImage("ressources/textures/bricks2_normal.jpg");
-    _texId[2] = loadImage("ressources/textures/bricks2_disp.jpg");
-
-//    std::cout << "texId[0]=" << _texId[0] << std::endl;
-//    std::cout << "texId[1]=" << _texId[1] << std::endl;
+    if (planeId == 0) {
+        _texId[0] = loadImage("ressources/textures/196.jpg");
+        _texId[1] = loadImage("ressources/textures/196_norm.jpg");
+        _texId[2] = loadImage("ressources/textures/196_disp.jpg");
+        //_texId[2] = 0;
+    } else if (planeId == 1) {
+        _texId[0] = loadImage("ressources/textures/bricks2.jpg");
+        _texId[1] = loadImage("ressources/textures/bricks2_normal.jpg");
+        _texId[2] = loadImage("ressources/textures/bricks2_disp.jpg");
+    } else if (planeId == 2) {
+        _texId[0] = loadImage("ressources/textures/awesomeface.png");
+        _texId[1] = loadImage("ressources/textures/awesomeface_NRM.png");
+        _texId[2] = loadImage("ressources/textures/awesomeface_DISP.png");
+    }
 }
+
 CPlane::~CPlane()
 {
     //dtor
@@ -90,10 +96,12 @@ void    CPlane::Draw(Shader& shader) {
     shader.setInt("material.texture_normal_count", 1);
     shader.setInt("material.texture_normal[0]", 1);
     glBindTexture(GL_TEXTURE_2D, _texId[1]);
-    glActiveTexture(GL_TEXTURE2);
-    shader.setInt("material.texture_height_count", 1);
-    shader.setInt("material.texture_height[0]", 2);
-    glBindTexture(GL_TEXTURE_2D, _texId[2]);
+    if (_texId[2]) {
+        glActiveTexture(GL_TEXTURE2);
+        shader.setInt("material.texture_height_count", 1);
+        shader.setInt("material.texture_height[0]", 2);
+        glBindTexture(GL_TEXTURE_2D, _texId[2]);
+    }
 
     shader.setFloat("material.shininess", 0.6f * 32.0f);
 

@@ -6,7 +6,7 @@
 class CPlane : public IModel
 {
     public:
-        CPlane();
+        CPlane(unsigned int = 0);
         virtual ~CPlane();
 
         virtual void            Draw(Shader&);
