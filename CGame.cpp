@@ -144,7 +144,7 @@ void CGame::loop() {
     CObject nanoObj(*this, nanosuit, glm::vec3(0.0f, -2.25f, 7.0f), glm::vec3(0.2f));
 //    nanoObj.ApplyRotation(glm::radians(90.0f), glm::vec3(0.0, 1.0, 0.0));
 
-    CObject nanoObj2(*this, nanosuit, glm::vec3(-3.0f, -2.25f, 7.0f), glm::vec3(0.2f));
+    //CObject nanoObj2(*this, nanosuit, glm::vec3(-3.0f, -2.25f, 7.0f), glm::vec3(0.2f));
 
     _objList.push_back(new CObject(*this, churros, glm::vec3(-5.0f, -1.75f, 0.0f), glm::vec3(0.2f)));
 
@@ -218,7 +218,8 @@ void CGame::loop() {
 
         anvilObj.Draw(shaderObjTBN, glm::vec3(1.0f));
         nanoObj.Draw(shaderObj, glm::vec3(1.0f));
-        nanoObj2.Draw(shaderObjTBN, glm::vec3(1.0f));
+
+        //nanoObj2.Draw(shaderObjTBN, glm::vec3(1.0f));
 
         carObj.Draw(shaderObj, glm::vec3(1.0f));
         planeObj.Draw(shaderObjTBN2, glm::vec3(1.0f));

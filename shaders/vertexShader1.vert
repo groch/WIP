@@ -6,12 +6,7 @@ layout (location = 3) in vec3 aTangent;
 layout (location = 4) in vec3 aBitangent;
 
 out VS_OUT {
-    vec3 FragPos;
-    vec2 TexCoords;
-    mat3 TBN;
-    vec3 Normal;
-    vec3 TangentViewPos;
-    vec3 TangentFragPos;
+#include "inOutVar_inc.glsl"
 } vs_out;
 
 //out vec3 ourColor;

@@ -18,46 +18,13 @@ public:
     Shader(const char* vertexPath, const char* fragmentPath, const char* geometryPath = nullptr) : ID(0)
     {
         // 1. retrieve the vertex/fragment source code from filePath
-        std::string vertexCode;
-        std::string fragmentCode;
+        std::string vertexCode = LoadShaderFile(vertexPath);
+        std::string fragmentCode = LoadShaderFile(fragmentPath);
         std::string geometryCode;
-        std::ifstream vShaderFile;
-        std::ifstream fShaderFile;
-        std::ifstream gShaderFile;
-        // ensure ifstream objects can throw exceptions:
 
-        vShaderFile.exceptions (std::ifstream::failbit | std::ifstream::badbit);
-        fShaderFile.exceptions (std::ifstream::failbit | std::ifstream::badbit);
-        gShaderFile.exceptions (std::ifstream::failbit | std::ifstream::badbit);
-        try
-        {
-            // open files
-            vShaderFile.open(vertexPath);
-            fShaderFile.open(fragmentPath);
-            std::stringstream vShaderStream, fShaderStream;
-            // read file's buffer contents into streams
-            vShaderStream << vShaderFile.rdbuf();
-            fShaderStream << fShaderFile.rdbuf();
-            // close file handlers
-            vShaderFile.close();
-            fShaderFile.close();
-            // convert stream into string
-            vertexCode = vShaderStream.str();
-            fragmentCode = fShaderStream.str();
-            // if geometry shader path is present, also load a geometry shader
-            if(geometryPath != nullptr)
-            {
-                gShaderFile.open(geometryPath);
-                std::stringstream gShaderStream;
-                gShaderStream << gShaderFile.rdbuf();
-                gShaderFile.close();
-                geometryCode = gShaderStream.str();
-            }
-        }
-        catch (std::ifstream::failure e)
-        {
-            std::cout << "ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ" << std::endl;
-        }
+        if(geometryPath != nullptr)
+            geometryCode = LoadShaderFile(geometryPath);
+
         const char* vShaderCode = vertexCode.c_str();
         const char* fShaderCode = fragmentCode.c_str();
         // 2. compile shaders
@@ -188,6 +155,39 @@ private:
                 std::cout << "ERROR::PROGRAM_LINKING_ERROR of type: " << type << "\n" << infoLog << "\n -- --------------------------------------------------- -- " << std::endl;
             }
         }
+    }
+
+    std::string LoadShaderFile(const char* path) {
+        std::ifstream       file;
+        std::stringstream   buff;
+        char                line[256];
+
+        //file.exceptions (std::ifstream::failbit | std::ifstream::badbit); failbit is triggered by getline
+        file.exceptions (std::ifstream::badbit);
+        try
+        {
+            std::cout << "LoadShaderFile path=" << path << std::endl;
+            file.open(path);
+            do {
+                file.getline(line, 256);
+                if (!strncmp(line, "#include", 8)) {
+                    std::string dir = path;
+                    dir = dir.substr(0, dir.find_last_of("/") + 1);
+                    line[strlen(line) - 1] = 0;
+                    dir.append(line+10);
+                    std::cout << "Recursive calling to path=" << dir << std::endl;
+                    buff << LoadShaderFile(dir.c_str()) << std::endl;
+                } else {
+                    buff << line << std::endl;
+                }
+            } while (!file.eof());
+            file.close();
+        }
+        catch (std::ifstream::failure e)
+        {
+            std::cout << "ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ path=" << path << std::endl;
+        }
+        return buff.str();
     }
 };
 #endif

@@ -7,12 +7,7 @@ out vec4 FragColor;
 //in vec3 FragPos;
 
 in VS_OUT {
-    vec3 FragPos;
-    vec2 TexCoords;
-    mat3 TBN;
-    vec3 Normal;
-    vec3 TangentViewPos;
-    vec3 TangentFragPos;
+#include "inOutVar_inc.glsl"
 } fs_in;
 
 uniform float mixValue;
